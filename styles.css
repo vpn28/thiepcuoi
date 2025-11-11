@@ -1,0 +1,1350 @@
+﻿/* Import Google Fonts - base fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Cormorant+Garamond:wght@300;400;500&display=swap');
+
+@font-face {
+  font-family: 'Gillastone';
+  src: url('https://cdn-resource.cinelove.me/fonts/webfonts/gillastone/gillastone.woff2') format('woff2'),
+       url('https://cdn-resource.cinelove.me/fonts/webfonts/gillastone/gillastone.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Great Vibes';
+  src: url('https://cdn-resource.cinelove.me/fonts/webfonts/great-vibes/great-vibes.woff2') format('woff2'),
+       url('https://cdn-resource.cinelove.me/fonts/webfonts/great-vibes/great-vibes.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PlayfairDisplay';
+  src: url('https://cdn-resource.cinelove.me/fonts/webfonts/playfairdisplay/playfairdisplay.woff2') format('woff2'),
+       url('https://cdn-resource.cinelove.me/fonts/webfonts/playfairdisplay/playfairdisplay.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Belinda Avenue';
+  src: url('https://cdn-resource.cinelove.me/fonts/webfonts/belinda-avenue/belinda-avenue.woff2') format('woff2'),
+       url('https://cdn-resource.cinelove.me/fonts/webfonts/belinda-avenue/belinda-avenue.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BethanWhite';
+  src: url('https://cdn-resource.cinelove.me/fonts/webfonts/bethanwhite/bethanwhite.woff2') format('woff2'),
+       url('https://cdn-resource.cinelove.me/fonts/webfonts/bethanwhite/bethanwhite.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Import Cinelove Fonts - vá»›i tÃªn chÃ­nh xÃ¡c */
+@font-face {
+    font-family: 'Madam Ghea';
+    src: url('https://cdn-resource.cinelove.me/fonts/webfonts/madam-ghea/madam-ghea.woff2') format('woff2'),
+         url('https://cdn-resource.cinelove.me/fonts/webfonts/madam-ghea/madam-ghea.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url('https://cdn-resource.cinelove.me/fonts/webfonts/quicksand/quicksand.woff2') format('woff2'),
+       url('https://cdn-resource.cinelove.me/fonts/webfonts/quicksand/quicksand.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+    font-family: 'katty Diona';
+    src: url('https://cdn-resource.cinelove.me/fonts/webfonts/katty-diona/katty-diona.woff2') format('woff2'),
+         url('https://cdn-resource.cinelove.me/fonts/webfonts/katty-diona/katty-diona.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Mallong';
+    src: url('https://cdn-resource.cinelove.me/fonts/webfonts/mallong/mallong.woff2') format('woff2'),
+         url('https://cdn-resource.cinelove.me/fonts/webfonts/mallong/mallong.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Signora';
+    src: url('https://cdn-resource.cinelove.me/fonts/webfonts/signora/signora.woff2') format('woff2'),
+         url('https://cdn-resource.cinelove.me/fonts/webfonts/signora/signora.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: #ffffff;
+    color: #333;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+/* Audio Control */
+.audio-control {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    background: rgba(165, 165, 165, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s;
+}
+
+.audio-control:hover {
+    background: rgba(165, 165, 165, 0.5);
+}
+
+.audio-control.playing .music-icon {
+    animation: rotate 5s linear infinite;
+}
+
+.music-icon {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+@keyframes rotate {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Container */
+.wedding-container {
+    max-width: 500px;
+    margin: 0 auto;
+    background: #fff;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Hero Section */
+.hero-full {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.hero-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, 
+        rgba(0,0,0,0.2) 0%, 
+        rgba(0,0,0,0.05) 40%,
+        rgba(0,0,0,0) 50%,
+        rgba(0,0,0,0.05) 60%,
+        rgba(0,0,0,0.2) 100%);
+}
+/* Text á»Ÿ trÃªn cÃ¹ng - cÄƒn giá»¯a */
+.hero-top-text {
+    position: absolute;
+    top: 25px;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    text-align: center;
+    color: #fff;
+    font-size: 0.75rem;
+    line-height: 1.6;
+    font-weight: 300;
+    font-family: 'Quicksand', serif;
+    width: 100%;
+    padding: 0 20px;
+    margin: 0 auto;
+}
+
+/* Welcome text - cÄƒn giá»¯a */
+.welcome-text {
+    position: absolute;
+    top: 120px;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    text-align: center;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: 'Signora', sans-serif;
+    letter-spacing: 6px;
+    width: 100%;
+    margin: 0;
+}
+
+/* We got married - á»Ÿ giá»¯a vá»›i Ä‘á»™ nghiÃªng */
+.main-title {
+    position: absolute;
+    top: 35%;
+    left: 30px;
+    transform: translateY(-50%) rotate(-28deg) !important;
+    z-index: 2;
+    font-family: 'katty Diona', cursive;
+    font-size: 4rem;
+    color: #fff;
+    font-weight: 400;
+    font-style: italic;
+    margin: 0;
+    line-height: 1.2;
+}
+
+/* TÃªn cÃ´ dÃ¢u chÃº rá»ƒ - Ä‘Æ¡n giáº£n */
+.couple-names-hero {
+    position: absolute;
+    bottom: 110px;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 35px;
+}
+
+.couple-names-hero .bride-name {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.couple-names-hero .groom-name {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.couple-names-hero .name-text {
+    font-family: 'Mallong', serif;
+    font-size: 1.5rem;
+    color: #fff;
+    font-weight: 400;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.couple-names-hero .label-text {
+    font-family: 'Mallong', sans-serif;
+    font-size: 0.65rem;
+    color: #f4d03f;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* NgÃ y cÆ°á»›i - cÄƒn giá»¯a */
+.hero-date {
+    position: absolute;
+    bottom: 60px;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    text-align: center;
+    font-family: 'Signora', sans-serif;
+    font-size: 1.3rem;
+    color: #fff;
+    margin: 0;
+    font-weight: 300;
+    letter-spacing: 3px;
+}
+
+/* Footer á»Ÿ dÆ°á»›i cÃ¹ng */
+.hero-footer {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    display: none; /* áº¨n footer vÃ¬ khÃ´ng cÃ³ trong template gá»‘c */
+}
+
+/* XÃ³a cÃ¡c style cÅ© khÃ´ng dÃ¹ng */
+.hero-text {
+    display: none;
+}
+
+/* Couple Section */
+.couple-section {
+    padding: 40px 0 0;
+    text-align: center;
+    background: #ffffff;
+}
+
+.wedding-info {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 40px;
+    margin-bottom: 20px;
+    font-family: 'Mallong', serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #000000;
+    letter-spacing: 1px;
+}
+
+.photo-frame {
+    position: relative;
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+.photo-frame img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.photo-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 30px 20px;
+    background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, transparent 100%)!important;
+    text-align: center;
+}
+
+.quote-on-photo {
+    font-family: 'Signora', sans-serif;
+    font-size: 1.1rem;
+    color: #ffffff;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.thank-text-on-photo {
+    margin: 0 auto;
+    max-width: 500px;
+    font-family: 'Quicksand', sans-serif;
+    height: auto;
+    width: 100%;
+    min-width: 20px;
+    color: rgb(255, 255, 255);
+    font-size: 10px;
+    text-shadow: rgba(0, 0, 0, 0) 0px 0px 2px;
+    font-weight: 500;
+    text-align: center;
+    line-height: normal;
+    letter-spacing: 0px;
+    text-transform: none;
+    text-decoration: none;
+    font-style: normal;
+    pointer-events: none;
+    overflow: hidden;
+    word-break: break-word;
+}
+
+/* Thank Section */
+.thank-section {
+    padding: 0;
+    display: none;
+}
+
+/* Story Section */
+.story-section {
+    padding: 40px 20px;
+}
+
+/* Align story heading + label as a compact block
+   - Line 1 centered, line 2 right-aligned
+   - Right edges of both lines align */
+.story-title {
+    display: grid;
+    grid-template-columns: max-content;
+    justify-content: center;
+    width: 100%;
+}
+.story-title .section-heading {
+    text-align: center;
+}
+.story-title .story-label {
+    text-align: right;
+}
+
+.section-heading {
+    height: auto;
+    width: 100%;
+    min-width: 20px;
+    color: rgb(0, 0, 0);
+    font-size: 23.4px !important;
+    text-shadow: rgba(0, 0, 0, 0) 0px 0px 2px;
+    font-weight: bold;
+    font-family: Mallong;
+    text-align: center;
+    line-height: normal;
+    letter-spacing: 2px;
+    text-transform: none;
+    text-decoration: none;
+    font-style: normal;
+    pointer-events: none;
+    overflow: hidden;
+    word-break: break-word;
+}
+
+.story-label {
+    height: auto;
+    width: 100%;
+    min-width: 20px;
+    color: rgb(0, 0, 0);
+    font-size: 12.48px;
+    text-shadow: rgba(0, 0, 0, 0) 0px 0px 2px;
+    font-weight: 500;
+    font-family: Quicksand;
+    text-align: right;
+    line-height: normal;
+    letter-spacing: 0px;
+    text-transform: none;
+    text-decoration: none;
+    font-style: normal;
+    pointer-events: none;
+    overflow: hidden;
+    word-break: break-word;
+}
+
+.story-photo {
+    max-width: 90%;
+    margin: 30px auto;
+}
+
+.story-photo img {
+    width: 100%;
+    display: block;
+}
+
+.sweet-text {
+    color: rgb(214, 48, 48) !important;
+    font-size: 70.2px !important;
+    font-weight: normal;
+    font-family: 'Gillastone', cursive !important;
+    text-align: right !important;
+    line-height: normal;
+    letter-spacing: 5px;
+    transform: rotate(-15deg) !important;
+    margin: 20px 0;
+    padding-right: 20px;
+    display: block;
+}
+
+.invitation-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    font-family: 'Mallong', serif;
+    font-size: 1rem;
+    margin: 5px 0;
+}
+
+.invitation-icon {
+    width: 20px;
+    height: auto;
+    object-fit: contain;
+}
+
+.invitation-icon:first-child {
+    transform: scaleX(-1);
+}
+
+.story-message {
+        height: auto;
+    width: 100%;
+    min-width: 20px;
+    color: rgb(0, 0, 0);
+    font-size: 12.54px;
+    text-shadow: rgba(0, 0, 0, 0) 0px 0px 2px;
+    font-weight: 500;
+    font-family: "Belinda Avenue";
+    text-align: center;
+    line-height: normal;
+    letter-spacing: 0px;
+    text-transform: none;
+    text-decoration: none;
+    font-style: normal;
+    pointer-events: none;
+    overflow: hidden;
+    word-break: break-word
+}
+
+.save-date {
+    font-family: 'Belinda Avenue', serif;
+    font-size: 1.8rem;
+    text-align: center;
+    color: #d4697c;
+    margin: 30px 0;
+}
+
+.save-message {
+    font-size: 1rem;
+    text-align: center;
+    color: #000000;
+    font-family: Mallong, serif;
+}
+
+
+/* Dearest Section */
+.dearest-section {
+    padding: 60px 20px;
+    position: relative;
+}
+
+/* Hide old markup inside this section (kept in HTML for content) */
+
+
+/* Dearest composition - matching template layout */
+.dearest-composition {
+    position: relative;
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+    height: 580px;
+}
+
+/* Background xám ở góc trái phía sau ảnh 1 */
+.dearest-composition::before {
+    content: "";
+    position: absolute;
+    left: 18px;
+    top: -30px;
+    width: 78%;
+    height: 200px;
+    background: #ebefe8;
+    border-radius: 0;
+    z-index: 0;
+}
+
+/* White block bên phải */
+/* .dearest-composition::after {
+    content: "";
+    position: absolute;
+    right: 10px;
+    bottom: 65px;
+    width: 58px;
+    height: 155px;
+    background: #ffffff;
+    z-index: 2;
+} */
+
+/* Remove any direct .dearest-bg block if present (use pseudo-element now) */
+.dearest-bg { display: none; }
+
+/* Main photo (ảnh 1) - tall portrait photo bên phải */
+.dearest-main-photo {
+    position: absolute;
+    top: 0;
+    left: 57.4px;
+    width: 80%;
+    height: 80%;
+    object-fit: cover;
+    border-radius: 0;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    transform: rotate(0deg) scale(1, 1);
+    transition: 1.3s ease-out 0.2s;
+    z-index: 1;
+    
+}
+
+/* Small photo (ảnh 2) - đè lên góc dưới bên trái của ảnh 1, có viền trắng 8px */
+.dearest-small-photo {
+    position: absolute;
+    left: 0;
+    top: 70%;
+    width: 85%;
+    height: 35%;
+    object-fit: cover;
+    border: 8px solid #fff;
+    border-radius: 0;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+    transform: rotate(0deg) scale(1, 1);
+    transition: 1.3s ease-out 0.2s;
+    z-index: 3;
+}
+
+/* Title overlay - OUR LOVE STORY at top right */
+.dearest-title-overlay {
+    position: absolute;
+    right: 25px;
+    top: 5px;
+    text-align: right;
+    z-index: 5;
+    font-family: 'Moon Light', 'Mallong', serif;
+    font-size: 20.5px;
+    font-weight: bold;
+    color: #c91212;
+    line-height: 1.2;
+    letter-spacing: 2.8px;
+}
+
+.dearest-title-overlay .t-our {
+    display: block;
+    font-size: 1rem;
+    letter-spacing: 2px;
+}
+.dearest-title-overlay .t-love {
+    display: block;
+    font-size: 2.4rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+
+/* Side note - vertical text on left */
+.dearest-side-note {
+    position: absolute;
+    left: -120px;
+    top: 20%;
+    transform: translateY(-50%) rotate(90deg) !important;
+    transform-origin: center;
+    font-family: "BethanWhite", cursive;
+    font-size: 25px;
+    font-weight: normal;
+    color: #000;
+    white-space: nowrap;
+    z-index: 4;
+}
+
+/* Side date - vertical text on right */
+.dearest-side-date {
+    position: absolute;
+    right: 5px;
+    top: 92%;
+    transform: translateY(-50%) rotate(90deg) !important;
+    transform-origin: center;
+    font-family: 'Madam Ghea', serif;
+    font-size: 30px;
+    font-weight: 500;
+    color: #000;
+    letter-spacing: 3px;
+    z-index: 4;
+}
+
+.dearest-title {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    margin: 50px 0;
+}
+
+.freedom-text {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3rem;
+    color: #b70000;
+    text-align: right;
+    margin: 30px 0;
+}
+
+.dearest-message {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    text-align: center;
+    color: #555;
+    margin: 30px 0;
+}
+
+/* Info Section - 2 ảnh ngang (2 cột) như mẫu */
+.info-section {
+    padding: 40px 20px;
+    background: #ffffff;
+    text-align: center;
+}
+
+.info-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 30px;
+    margin-bottom: 18px;
+    font-family: 'Mallong', serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #000000;
+    letter-spacing: 1px;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* Container cho 2 ảnh - xếp ngang */
+.info-photos-container {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+/* Ảnh 1 - bên trái, có viền trắng */
+.info-photo-main {
+    width: 48%;
+    flex-shrink: 0;
+}
+
+.info-photo-main img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    border: 8px solid #fff;
+    border-radius: 0;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+/* Ảnh 2 - bên phải, có viền trắng */
+.info-photo-small {
+    width: 48%;
+    flex-shrink: 0;
+}
+
+.info-photo-small img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    border: 8px solid #fff;
+    border-radius: 0;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+/* Text dọc bên trái */
+.info-side-note {
+    position: absolute;
+    left: -125px;
+    top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    transform-origin: center;
+    font-family: "BethanWhite", cursive;
+    font-size: 19px;
+    font-weight: normal;
+    color: #000;
+    white-space: nowrap;
+    z-index: 4;
+}
+
+/* Text dọc bên phải */
+.info-side-date {
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    transform-origin: center;
+    font-family: 'Madam Ghea', serif;
+    font-size: 16.5px;
+    font-weight: 500;
+    color: #000;
+    letter-spacing: 3px;
+    z-index: 4;
+}
+
+/* Text ở dưới - màu cam */
+.info-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    text-align: center;
+    color: #000000;
+    margin: 20px auto;
+    max-width: 400px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+/* Ẩn các style cũ không dùng */
+.info-photo {
+    display: none;
+}
+
+.info-subtitle {
+    display: none;
+}
+
+.perfect-text {
+    display: none;
+}
+
+/* Perfect Section - Section với ảnh nền và lịch overlay */
+.perfect-section {
+    position: relative;
+    width: 100%;
+    height: 90%;
+    min-height: 600px;
+    overflow: hidden;
+}
+
+.perfect-bg-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.9);
+}
+
+.perfect-overlay {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 30px 20px;
+    z-index: 2;
+}
+
+/* Header - 21.12 FALL IN LOVE */
+.perfect-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Mallong', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    letter-spacing: 1px;
+}
+
+/* Badge - WEDDING INVITATION */
+.perfect-badge {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin: 15px 0;
+}
+
+.badge-icon {
+    font-size: 1.2rem;
+}
+
+.badge-text {
+    font-family: 'Mallong', serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #fff;
+    text-align: center;
+    line-height: 1.4;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Calendar Grid trên ảnh */
+.perfect-calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    width: 340px;
+    max-width: 480px;
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.15);
+    /* backdrop-filter: blur(12px); */
+    border-radius: 15px;
+    z-index: 154;
+    position: absolute;
+    bottom: -450px;
+    right: 30px;
+}
+
+.cal-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: rgb(255, 255, 255);
+    /* text-shadow: 0 1px 2px rgba(255, 255, 255, 0.05); */
+    position: relative;
+}
+
+.cal-day div {
+    font-size: 0.95rem;
+    font-weight: 500;
+    opacity: 0.6;
+}
+
+.cal-day.highlight {
+    background: transparent;
+    backdrop-filter: none;
+    font-weight: bold;
+    box-shadow: none;
+    transform: scale(1.15);
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+}
+
+.heart-date {
+    width: 110%;
+    height: 110%;
+    object-fit: contain;
+    position: absolute;
+    top: -5%;
+    left: -5%;
+    z-index: 1;
+    filter: drop-shadow(0 4px 8px rgba(212, 31, 61, 0.4));
+}
+
+.colorF {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #fff;
+    position: relative;
+    z-index: 2;
+    margin-top: -2px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Footer - Text ở dưới */
+.perfect-footer {
+    text-align: center;
+    color: #fff;
+}
+
+.perfect-subtitle {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.perfect-title {
+    font-family: 'PlayfairDisplay', serif;
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+
+/* Calendar Section */
+.calendar-section {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.calendar-badge {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    border: 3px solid #d4697c;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.calendar-badge .big {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #d4697c;
+}
+
+.fall-love {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    margin: 20px 0;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    max-width: 400px;
+    margin: 30px auto;
+}
+
+.calendar-day {
+    padding: 10px;
+    background: #f5f5f5;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.calendar-day.highlight {
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    color: #fff;
+    font-weight: bold;
+    transform: scale(1.1);
+}
+
+.event-date {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin: 20px 0;
+}
+
+.event-time {
+    font-size: 1.1rem;
+    color: #666;
+}
+
+/* Countdown */
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 40px 0;
+}
+
+.countdown-item {
+    text-align: center;
+}
+
+.countdown-value {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #d4697c;
+}
+
+.countdown-label {
+    font-size: 0.9rem;
+    color: #999;
+}
+
+.calendar-message {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #555;
+    margin: 30px 0;
+}
+
+/* Forever Section */
+.forever-section {
+    padding: 60px 20px;
+    background: #f9f9f9;
+    text-align: center;
+}
+
+.forever-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    line-height: 1.3;
+    margin: 30px 0;
+}
+
+.forever-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #555;
+    margin: 30px 0;
+}
+
+.venue {
+    font-size: 1.2rem;
+    color: #666;
+    margin: 20px 0;
+}
+
+.love-forever {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.5rem;
+    color: #d4697c;
+    margin: 30px 0;
+}
+
+/* Sunshine Section */
+.sunshine-section {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.sunshine-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3rem;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.couple-photo {
+    max-width: 90%;
+    margin: 30px auto;
+}
+
+.couple-photo img {
+    width: 100%;
+    display: block;
+}
+
+.thank-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    margin: 20px 0;
+}
+
+.final-names {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    font-size: 1.3rem;
+    margin: 20px 0;
+}
+
+/* RSVP Section */
+.rsvp-section {
+    padding: 60px 20px;
+    background: #f9f9f9;
+}
+
+.rsvp-form {
+    max-width: 400px;
+    margin: 30px auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 105, 135, 0.4);
+}
+
+/* Guest Messages */
+.guest-messages {
+    max-width: 500px;
+    margin: 40px auto;
+}
+
+.guest-messages h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.guest-message {
+    background: #fff;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.guest-message h4 {
+    font-size: 1.1rem;
+    color: #d4697c;
+    margin-bottom: 5px;
+}
+
+.guest-message p {
+    font-size: 0.95rem;
+    color: #666;
+}
+
+.wish-input {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.wish-input input {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 25px;
+    font-size: 1rem;
+}
+
+.btn-wish {
+    padding: 12px 25px;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+/* Gift Section */
+.gift-section {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.btn-gift {
+    padding: 15px 40px;
+    background: linear-gradient(135deg, #ffd89b, #19547b);
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s;
+}
+
+.btn-gift:hover {
+    transform: scale(1.05);
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 30px;
+    background: #333;
+    color: #fff;
+}
+
+.footer a {
+    color: #fad0c4;
+    text-decoration: none;
+}
+
+/* Animations - Giá»‘ng template */
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 1.3s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-up {
+    opacity: 0;
+    animation: slideUp 1.3s ease-out forwards;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-right {
+    opacity: 0;
+    animation: slideRight 1.3s ease-out forwards;
+}
+
+@keyframes slideRight {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.slide-left {
+    opacity: 0;
+    animation: slideLeft 1.3s ease-out forwards;
+}
+
+@keyframes slideLeft {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 2.5rem;
+    }
+    
+    .section-heading {
+        font-size: 1.8rem;
+    }
+    
+    .sweet-text {
+        font-size: 3.5rem;
+    }
+    
+    .calendar-grid {
+        max-width: 300px;
+        gap: 5px;
+    }
+}
