@@ -64,7 +64,7 @@ git push -u origin main
 2. Tab **Storage**
 3. Click **Create Database**
 4. Chọn **Blob**
-5. Tên: `wedding-messages`
+5. Tên: `vanquynh`
 6. Click **Create**
 
 ### 3.2 Vercel tự động thêm Environment Variables

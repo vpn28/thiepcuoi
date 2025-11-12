@@ -33,7 +33,7 @@ vercel login
 3. Vào tab **Storage**
 4. Click **Create Database**
 5. Chọn **Blob**
-6. Đặt tên: `wedding-messages`
+6. Đặt tên: `vanquynh`
 7. Click **Create**
 
 ## Bước 6: Lấy Environment Variables
