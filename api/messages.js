@@ -3,6 +3,9 @@
 
 import { put, list } from '@vercel/blob';
 
+// Get token from environment variable
+const BLOB_TOKEN = process.env.VQ_READ_WRITE_TOKEN;
+
 // Allow CORS for your domain
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -20,8 +23,9 @@ export default async function handler(req, res) {
     // GET - Lấy tất cả messages
     if (req.method === 'GET') {
       const { blobs } = await list({
-        prefix: 'wedding-messages/',
+        prefix: 'vanquynh/',
         limit: 1000,
+        token: BLOB_TOKEN,
       });
 
       // Fetch all message files
@@ -55,10 +59,11 @@ export default async function handler(req, res) {
       };
 
       // Save to Vercel Blob Storage
-      const filename = `wedding-messages/${newMessage.timestamp}-${Date.now()}.json`;
+      const filename = `vanquynh/${newMessage.timestamp}-${Date.now()}.json`;
       const blob = await put(filename, JSON.stringify(newMessage), {
         access: 'public',
         contentType: 'application/json',
+        token: BLOB_TOKEN,
       });
 
       return res.status(201).json({
