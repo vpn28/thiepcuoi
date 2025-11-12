@@ -42,49 +42,207 @@ function updateCountdown() {
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
-// RSVP Form
-const rsvpForm = document.getElementById('rsvpForm');
-rsvpForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const formData = new FormData(rsvpForm);
-    const name = formData.get('name') || rsvpForm.querySelector('input[type="text"]').value;
-    alert(`Cảm ơn ${name} đã xác nhận tham dự!`);
-    rsvpForm.reset();
-});
+// RSVP Form with Vercel Blob Storage
+let rsvpForm, guestbook;
+const API_ENDPOINT = '/api/messages'; // Vercel API endpoint
 
-// Wish Button
-const btnWish = document.getElementById('btnWish');
-const wishInput = document.getElementById('wishInput');
-const guestbook = document.getElementById('guestbook');
-
-btnWish.addEventListener('click', () => {
-    const wish = wishInput.value.trim();
-    if (wish) {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = 'guest-message';
-        messageDiv.innerHTML = `
-            <h4>Bạn:</h4>
-            <p>${wish}</p>
-        `;
-        guestbook.insertBefore(messageDiv, guestbook.firstChild);
-        wishInput.value = '';
-    }
-});
-
-// Gift Button
-const btnGift = document.getElementById('btnGift');
-const giftCount = document.getElementById('giftCount');
-
-btnGift.addEventListener('click', () => {
-    let count = parseInt(giftCount.textContent);
-    count++;
-    giftCount.textContent = count;
+// Initialize RSVP form when DOM is ready
+function initRSVPForm() {
+    rsvpForm = document.getElementById('rsvpForm');
+    guestbook = document.getElementById('guestbook');
     
-    btnGift.style.transform = 'scale(1.2)';
-    setTimeout(() => {
-        btnGift.style.transform = 'scale(1)';
-    }, 200);
-});
+    if (!rsvpForm || !guestbook) {
+        console.log('RSVP form not found on this page');
+        return;
+    }
+    
+    // Handle form submission
+    rsvpForm.addEventListener('submit', handleFormSubmit);
+    
+    // Load messages on initialization
+    loadMessages();
+}
+
+// Load messages from Vercel Blob Storage
+async function loadMessages() {
+    if (!guestbook) return;
+    
+    try {
+        // Fetch from Vercel API
+        const response = await fetch(API_ENDPOINT);
+        
+        if (!response.ok) {
+            throw new Error('Failed to load messages');
+        }
+        
+        const messages = await response.json();
+        
+        // Display all messages
+        guestbook.innerHTML = '';
+        messages.forEach(msg => {
+            addMessageToDOM(msg.name, msg.count, msg.attend, msg.message, msg.timestamp);
+        });
+        
+        console.log(`Loaded ${messages.length} messages from Vercel Blob Storage`);
+        return messages;
+    } catch (error) {
+        console.error('Error loading messages:', error);
+        
+        // Fallback to localStorage if API fails
+        const localMessages = JSON.parse(localStorage.getItem('weddingMessages') || '[]');
+        guestbook.innerHTML = '';
+        localMessages.forEach(msg => {
+            addMessageToDOM(msg.name, msg.count, msg.attend, msg.message, msg.timestamp);
+        });
+        
+        console.log('Using localStorage fallback');
+    }
+}
+
+// Add message to DOM
+function addMessageToDOM(name, count, attend, message, timestamp) {
+    if (!guestbook) return;
+    
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'guest-message fade-in';
+    
+    const attendText = attend === 'yes' ? '✓ Tham dự' : '✗ Không tham dự';
+    const countText = count ? ` • ${count} người` : '';
+    
+    messageDiv.innerHTML = `
+        <div class="message-header">
+            <h4 class="guest-name">${name}</h4>
+            <span class="guest-info">${attendText}${countText}</span>
+        </div>
+        ${message ? `<p class="message-content">${message}</p>` : ''}
+    `;
+    
+    guestbook.insertBefore(messageDiv, guestbook.firstChild);
+}
+
+// Save message to localStorage
+function saveMessage(name, count, attend, message) {
+    const messages = JSON.parse(localStorage.getItem('weddingMessages') || '[]');
+    const newMessage = {
+        name: name,
+        count: count,
+        attend: attend,
+        message: message,
+        timestamp: new Date().toISOString()
+    };
+    
+    messages.unshift(newMessage);
+    localStorage.setItem('weddingMessages', JSON.stringify(messages));
+    
+    return newMessage;
+}
+
+// Save message to Vercel Blob Storage
+async function saveMessageToCloud(name, count, attend, message) {
+    try {
+        const response = await fetch(API_ENDPOINT, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name,
+                count,
+                attend,
+                message,
+            }),
+        });
+        
+        if (!response.ok) {
+            throw new Error('Failed to save message');
+        }
+        
+        const result = await response.json();
+        console.log('Message saved to Vercel Blob Storage:', result);
+        return result.message;
+    } catch (error) {
+        console.error('Error saving to cloud:', error);
+        // Fallback to localStorage
+        return saveMessage(name, count, attend, message);
+    }
+}
+
+// Export messages to JSON file (no longer needed with Blob Storage, but kept for backup)
+function exportMessagesToJSON() {
+    const messages = JSON.parse(localStorage.getItem('weddingMessages') || '[]');
+    const jsonString = JSON.stringify(messages, null, 2);
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'messages-backup.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    console.log('Messages exported to messages-backup.json');
+}
+
+// Handle form submission
+async function handleFormSubmit(e) {
+    e.preventDefault();
+    
+    const name = document.getElementById('guestName').value.trim();
+    const count = document.getElementById('guestCount').value;
+    const attend = document.querySelector('input[name="attend"]:checked').value;
+    const message = document.getElementById('guestMessage').value.trim();
+    
+    if (!name) {
+        alert('Vui lòng nhập tên của bạn');
+        return;
+    }
+    
+    if (!count) {
+        alert('Vui lòng chọn số người tham dự');
+        return;
+    }
+    
+    // Show loading state
+    const submitBtn = rsvpForm.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<span>Đang gửi...</span>';
+    submitBtn.disabled = true;
+    
+    try {
+        // Save to Vercel Blob Storage
+        const newMessage = await saveMessageToCloud(name, count, attend, message);
+        
+        // Add to DOM
+        addMessageToDOM(name, count, attend, message, newMessage.timestamp);
+        
+        // Log to console for tracking
+        console.log('New RSVP saved:', newMessage);
+        
+        // Show success message
+        alert(`Cảm ơn ${name} đã xác nhận! Chúng mình rất mong được gặp bạn.`);
+        
+        // Reset form
+        rsvpForm.reset();
+    } catch (error) {
+        console.error('Error submitting form:', error);
+        alert('Có lỗi xảy ra. Vui lòng thử lại sau.');
+    } finally {
+        // Restore button
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    }
+}
+
+// Initialize when DOM is loaded
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initRSVPForm);
+} else {
+    initRSVPForm();
+}
+
+// Make export function available globally
+window.exportMessagesToJSON = exportMessagesToJSON;
 
 // Scroll animations - giống template
 const observerOptions = {

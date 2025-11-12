@@ -12,3 +12,21 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+temp_patch.diff
+temp_snippet.text
+template.html
+# Vercel
+.vercel
+.env
+.env.local
+.env.production.local
+
+# Build
+dist/
+build/

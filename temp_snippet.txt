@@ -1,0 +1,22 @@
+        <!-- Dearest Section -->
+        <section class="dearest-section">
+            <div class="big-photo fade-in">
+                <img src="https://cdn.cinelove.me/templates/assets/7e275458-268a-4dad-b147-1af6ad9abb46/0d2f9d57-3461-444b-87c6-0d8f3c4489de.jpeg" alt="Together">
+            </div>
+            
+            <h2 class="dearest-title slide-up">
+                <span>YOU ARE</span>
+                <span>MY DEAREST</span>
+                <span>LOVE</span>
+            </h2>
+            
+            <h3 class="freedom-text slide-up">Love and freedom<br>you And gentleness</h3>
+            
+            <p class="dearest-message fade-in">
+                Núi biếc rừng xanh vang vọng tiếng lòng,<br>
+                Giữa thế gian rộng lớn, người chung nhịp vẫn tìm thấy nhau.<br>
+                Tình yêu đến như một lẽ tự nhiên,<br>
+                Và chúng ta nắm tay nhau đi đến trọn đời.
+            </p>
+        </section>
+
