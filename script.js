@@ -146,6 +146,7 @@ function addMessageToDOM(name, count, attend, message, timestamp) {
     messageDiv.innerHTML = `
         <div class="message-header">
             <h4 class="guest-name">${name}</h4>
+            <span class="guest-info">${attendText}</span>
         </div>
         ${message ? `<p class="message-content">${message}</p>` : ''}
     `;
