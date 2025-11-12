@@ -1595,7 +1595,7 @@ body {
 .message-list {
     display: grid;
     gap: 14px;
-    max-height: 600px;
+    max-height: 350px;
     overflow-y: auto;
     padding-right: 8px;
 }
