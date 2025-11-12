@@ -1727,6 +1727,271 @@ body {
     }
 }
 
+/* === Gifting Animation Keyframes === */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateY(30px) translateX(-50px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) translateX(0) scale(1);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateY(30px) translateX(50px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) translateX(0) scale(1);
+    }
+}
+
+/* === Gifting Section === */
+.gifting-section {
+    padding: 50px 0 60px;
+    background: #ffffff;
+    font-family: 'Quicksand', sans-serif;
+    text-align: center;
+    overflow: hidden;
+}
+
+.gifting-wrapper {
+    width: 90%;
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.gifting-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    color: #7b9c8f;
+    margin-bottom: 8px;
+    opacity: 0;
+    animation: fadeInDown 0.8s ease forwards;
+}
+
+.gifting-description {
+    font-size: 0.85rem;
+    color: #777;
+    margin-bottom: 32px;
+    line-height: 1.5;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease 0.2s forwards;
+}
+
+.account-boxes-container {
+    display: flex;
+    flex-direction: row !important;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: nowrap;
+}
+
+/* === THIẾT KẾ BOX MỪNG CƯỚI === */
+.account-box {
+    background: #ffffff;
+    border-radius: 6px;
+    padding: 20px 18px;
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid #e8ece8;
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    position: relative;
+    overflow: hidden;
+}
+
+.account-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(123, 156, 143, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.account-box:hover::before {
+    left: 100%;
+}
+
+.account-box:nth-child(1) {
+    animation: slideInLeft 0.6s ease 0.4s forwards;
+}
+
+.account-box:nth-child(2) {
+    animation: slideInRight 0.6s ease 0.4s forwards;
+}
+
+.account-box:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(123, 156, 143, 0.25);
+    border-color: #7b9c8f;
+}
+
+/* Mã QR hiển thị sẵn */
+.account-qr-image {
+    width: 100%;
+    max-width: 160px;
+    height: auto;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    border: 1px solid #e0e6e0;
+    transition: all 0.4s ease;
+    filter: grayscale(0.2);
+}
+
+.account-box:hover .account-qr-image {
+    transform: scale(1.05) rotate(2deg);
+    filter: grayscale(0);
+    box-shadow: 0 4px 12px rgba(123, 156, 143, 0.2);
+}
+
+.account-info h4 {
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: #2c3e2c;
+    margin: 0 0 3px 0;
+    transition: all 0.3s ease;
+}
+
+.account-box:hover .account-info h4 {
+    color: #7b9c8f;
+    transform: scale(1.05);
+}
+
+.account-info p {
+    font-size: 0.6rem;
+    color: #666;
+    margin: 3px 0;
+    transition: color 0.3s ease;
+}
+
+.account-box:hover .account-info p {
+    color: #555;
+}
+
+.account-number {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #7b9c8f;
+    margin: 8px 0;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.account-box:hover .account-number {
+    transform: scale(1.1);
+    letter-spacing: 1px;
+}
+
+/* Nút sao chép */
+.copy-button {
+    background: linear-gradient(135deg, #7b9c8f 0%, #6a8a7d 100%);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.copy-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.copy-button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.copy-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(123, 156, 143, 0.4);
+}
+
+.copy-button:active {
+    transform: translateY(0);
+}
+
+.account-number {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #7b9c8f;
+    margin: 8px 0;
+    letter-spacing: 0.5px;
+}
+
+/* Nút sao chép */
+.copy-button {
+    background-color: #7b9c8f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: 12px;
+}
+
+.copy-button:hover {
+    background-color: #6a8a7d;
+    box-shadow: 0 2px 6px rgba(123, 156, 143, 0.3);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .main-title {
@@ -1744,5 +2009,44 @@ body {
     .calendar-grid {
         max-width: 300px;
         gap: 5px;
+    }
+
+    .account-box {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .account-qr-image {
+        max-width: 140px;
+    }
+}
+
+@media (max-width: 600px) {
+    .gifting-wrapper {
+        width: 95%;
+    }
+
+    .gifting-title {
+        font-size: 1.9rem;
+    }
+
+    .gifting-description {
+        font-size: 0.82rem;
+        margin-bottom: 24px;
+    }
+
+    .account-boxes-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .account-box {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .account-qr-image {
+        max-width: 140px;
     }
 }
