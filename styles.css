@@ -1593,17 +1593,34 @@ body {
 }
 
 .message-list {
-    display: grid;
+    display: flex !important;
+    flex-direction: column-reverse !important;
     gap: 14px;
     max-height: 450px;
-    overflow-y: auto;
+    overflow: hidden !important;
     padding-right: 8px;
     position: relative;
+    animation: scrollMessages 20s linear infinite !important;
+}
+
+/* Continuous scroll animation */
+@keyframes scrollMessages {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-50%);
+    }
+}
+
+.message-list:hover {
+    animation-play-state: paused !important;
 }
 
 /* Scrollbar styling */
 .message-list::-webkit-scrollbar {
-    width: 6px;
+    width: 0 !important;
+    display: none !important;
 }
 
 .message-list::-webkit-scrollbar-track {
@@ -1622,17 +1639,18 @@ body {
 
 /* Livestream style message */
 .guest-message {
-    background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
-    padding: 16px 18px;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    border-left: 4px solid #ff9a9e;
-    position: relative;
-    overflow: visible;
-    animation: slideInMessage 0.5s ease-out;
-    opacity: 0;
-    transform: translateX(-20px) scale(0.95);
+    background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%) !important;
+    padding: 16px 18px !important;
+    border-radius: 12px !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06) !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border-left: 4px solid #ff9a9e !important;
+    position: relative !important;
+    overflow: visible !important;
+    animation: slideInMessage 0.8s ease-out forwards, floatMessage 3s ease-in-out infinite !important;
+    opacity: 1 !important;
+    transform: translateX(0) scale(1) !important;
+    flex-shrink: 0 !important;
 }
 
 @keyframes slideInMessage {
@@ -1646,6 +1664,16 @@ body {
     100% {
         opacity: 1;
         transform: translateX(0) translateY(0) scale(1);
+    }
+}
+
+/* Continuous floating effect */
+@keyframes floatMessage {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-5px);
     }
 }
 
@@ -1693,30 +1721,39 @@ body {
 
 /* === Floating Hearts Animation === */
 .floating-heart {
-    position: absolute;
-    font-size: 20px;
-    color: #ff6b9d;
-    opacity: 0;
-    pointer-events: none;
-    z-index: 10;
-    animation: floatHeart 3s ease-in-out forwards;
+    position: absolute !important;
+    font-size: 24px !important;
+    color: #ff6b9d !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    z-index: 100 !important;
+    animation: floatHeart 4s ease-in-out forwards !important;
+    text-shadow: 0 0 10px rgba(255, 107, 157, 0.5) !important;
 }
 
 @keyframes floatHeart {
     0% {
         opacity: 0;
-        transform: translateY(0) translateX(0) scale(0.5) rotate(0deg);
+        transform: translateY(0) translateX(0) scale(0.3) rotate(0deg);
     }
-    10% {
+    5% {
         opacity: 1;
     }
+    25% {
+        opacity: 0.9;
+        transform: translateY(-80px) translateX(var(--x-offset, 15px)) scale(0.8) rotate(10deg);
+    }
     50% {
-        opacity: 0.8;
-        transform: translateY(-100px) translateX(var(--x-offset, 20px)) scale(1) rotate(15deg);
+        opacity: 0.7;
+        transform: translateY(-160px) translateX(var(--x-offset, 25px)) scale(1.1) rotate(20deg);
+    }
+    75% {
+        opacity: 0.4;
+        transform: translateY(-240px) translateX(var(--x-offset, 35px)) scale(0.7) rotate(25deg);
     }
     100% {
         opacity: 0;
-        transform: translateY(-200px) translateX(var(--x-offset, 40px)) scale(0.3) rotate(30deg);
+        transform: translateY(-320px) translateX(var(--x-offset, 45px)) scale(0.2) rotate(30deg);
     }
 }
 

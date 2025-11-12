@@ -83,6 +83,11 @@ async function loadMessages() {
             addMessageToDOM(msg.name, msg.count, msg.attend, msg.message, msg.timestamp);
         });
         
+        // Duplicate for continuous scroll
+        setTimeout(() => {
+            duplicateMessagesForScroll();
+        }, 500);
+        
         console.log(`Loaded ${messages.length} messages from Vercel Blob Storage`);
         return messages;
     } catch (error) {
@@ -95,6 +100,11 @@ async function loadMessages() {
             addMessageToDOM(msg.name, msg.count, msg.attend, msg.message, msg.timestamp);
         });
         
+        // Duplicate for continuous scroll
+        setTimeout(() => {
+            duplicateMessagesForScroll();
+        }, 500);
+        
         console.log('Using localStorage fallback');
     }
 }
@@ -103,13 +113,17 @@ async function loadMessages() {
 function createFloatingHeart(container) {
     const heart = document.createElement('div');
     heart.className = 'floating-heart';
-    heart.innerHTML = '❤️';
+    
+    // Random heart variations
+    const hearts = ['❤️', '💕', '💖', '💗', '💓', '💝'];
+    heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
     
     // Random position
-    const startX = Math.random() * 100;
-    const xOffset = (Math.random() - 0.5) * 80; // -40px to +40px
+    const startX = Math.random() * 90 + 5; // 5% to 95%
+    const xOffset = (Math.random() - 0.5) * 100; // -50px to +50px
     
     heart.style.left = `${startX}%`;
+    heart.style.bottom = '0';
     heart.style.setProperty('--x-offset', `${xOffset}px`);
     
     container.appendChild(heart);
@@ -117,7 +131,7 @@ function createFloatingHeart(container) {
     // Remove heart after animation
     setTimeout(() => {
         heart.remove();
-    }, 3000);
+    }, 4000);
 }
 
 // Add message to DOM with livestream effect
@@ -127,40 +141,39 @@ function addMessageToDOM(name, count, attend, message, timestamp) {
     const messageDiv = document.createElement('div');
     messageDiv.className = 'guest-message';
     
-    const attendText = attend === 'yes' ? '✓ Tham dự' : '✗ Không tham dú';
+    const attendText = attend === 'yes' ? '✓ Tham dự' : '✗ Không tham dự';
     
     messageDiv.innerHTML = `
         <div class="message-header">
             <h4 class="guest-name">${name}</h4>
-            <span class="guest-info">${attendText}</span>
         </div>
         ${message ? `<p class="message-content">${message}</p>` : ''}
     `;
     
-    guestbook.insertBefore(messageDiv, guestbook.firstChild);
+    guestbook.appendChild(messageDiv);
     
-    // Trigger animation
-    setTimeout(() => {
-        messageDiv.classList.add('show');
-    }, 10);
-    
-    // Create floating hearts (2-3 hearts)
-    const heartCount = Math.floor(Math.random() * 2) + 2; // 2 or 3 hearts
+    // Create floating hearts (3-5 hearts)
+    const heartCount = Math.floor(Math.random() * 3) + 3;
     for (let i = 0; i < heartCount; i++) {
         setTimeout(() => {
             createFloatingHeart(guestbook);
-        }, i * 200); // Stagger hearts
+        }, i * 300);
     }
+}
+
+// Duplicate messages for continuous scroll effect
+function duplicateMessagesForScroll() {
+    const guestbook = document.getElementById('guestbook');
+    if (!guestbook) return;
     
-    // Auto scroll to top to show new message
-    if (guestbook.scrollTop === 0 || guestbook.scrollTop < 50) {
-        // Already at top, no need to scroll
-    } else {
-        guestbook.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    }
+    const messages = Array.from(guestbook.children);
+    if (messages.length === 0) return;
+    
+    // Duplicate messages to create seamless loop
+    messages.forEach(msg => {
+        const clone = msg.cloneNode(true);
+        guestbook.appendChild(clone);
+    });
 }
 
 // Save message to localStorage
@@ -284,12 +297,18 @@ function startRandomHearts() {
     const guestbook = document.getElementById('guestbook');
     if (!guestbook) return;
     
+    // Create hearts more frequently
     setInterval(() => {
-        // Random chance to create heart (30% every 3 seconds)
-        if (Math.random() < 0.3) {
-            createFloatingHeart(guestbook);
+        // 70% chance to create 1-2 hearts every 1.5 seconds
+        if (Math.random() < 0.7) {
+            const count = Math.floor(Math.random() * 2) + 1; // 1-2 hearts
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => {
+                    createFloatingHeart(guestbook);
+                }, i * 400);
+            }
         }
-    }, 3000);
+    }, 1500); // Every 1.5 seconds
 }
 
 // Start random hearts after page loads
