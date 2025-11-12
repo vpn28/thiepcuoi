@@ -44,15 +44,14 @@ export default async function handler(req, res) {
 
     // POST - Thêm message mới
     if (req.method === 'POST') {
-      const { name, count, attend, message } = req.body;
+      const { name, attend, message } = req.body;
 
-      if (!name || !count || !attend) {
+      if (!name || !attend) {
         return res.status(400).json({ error: 'Missing required fields' });
       }
 
       const newMessage = {
         name,
-        count,
         attend,
         message: message || '',
         timestamp: new Date().toISOString(),

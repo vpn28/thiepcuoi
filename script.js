@@ -107,12 +107,11 @@ function addMessageToDOM(name, count, attend, message, timestamp) {
     messageDiv.className = 'guest-message fade-in';
     
     const attendText = attend === 'yes' ? '✓ Tham dự' : '✗ Không tham dự';
-    const countText = count ? ` • ${count} người` : '';
     
     messageDiv.innerHTML = `
         <div class="message-header">
             <h4 class="guest-name">${name}</h4>
-            <span class="guest-info">${attendText}${countText}</span>
+            <span class="guest-info">${attendText}</span>
         </div>
         ${message ? `<p class="message-content">${message}</p>` : ''}
     `;
@@ -125,7 +124,6 @@ function saveMessage(name, count, attend, message) {
     const messages = JSON.parse(localStorage.getItem('weddingMessages') || '[]');
     const newMessage = {
         name: name,
-        count: count,
         attend: attend,
         message: message,
         timestamp: new Date().toISOString()
@@ -147,7 +145,6 @@ async function saveMessageToCloud(name, count, attend, message) {
             },
             body: JSON.stringify({
                 name,
-                count,
                 attend,
                 message,
             }),
@@ -189,17 +186,11 @@ async function handleFormSubmit(e) {
     e.preventDefault();
     
     const name = document.getElementById('guestName').value.trim();
-    const count = document.getElementById('guestCount').value;
     const attend = document.querySelector('input[name="attend"]:checked').value;
     const message = document.getElementById('guestMessage').value.trim();
     
     if (!name) {
         alert('Vui lòng nhập tên của bạn');
-        return;
-    }
-    
-    if (!count) {
-        alert('Vui lòng chọn số người tham dự');
         return;
     }
     
@@ -210,11 +201,11 @@ async function handleFormSubmit(e) {
     submitBtn.disabled = true;
     
     try {
-        // Save to Vercel Blob Storage
-        const newMessage = await saveMessageToCloud(name, count, attend, message);
+        // Save to Vercel Blob Storage (count = null)
+        const newMessage = await saveMessageToCloud(name, null, attend, message);
         
         // Add to DOM
-        addMessageToDOM(name, count, attend, message, newMessage.timestamp);
+        addMessageToDOM(name, null, attend, message, newMessage.timestamp);
         
         // Log to console for tracking
         console.log('New RSVP saved:', newMessage);

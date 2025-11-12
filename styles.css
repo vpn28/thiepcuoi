@@ -1595,6 +1595,28 @@ body {
 .message-list {
     display: grid;
     gap: 14px;
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 8px;
+}
+
+/* Scrollbar styling */
+.message-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.message-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.message-list::-webkit-scrollbar-thumb {
+    background: #7b9c8f;
+    border-radius: 10px;
+}
+
+.message-list::-webkit-scrollbar-thumb:hover {
+    background: #6a8a7d;
 }
 
 .guest-message {
