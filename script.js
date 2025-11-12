@@ -99,14 +99,35 @@ async function loadMessages() {
     }
 }
 
-// Add message to DOM
+// Create floating heart animation
+function createFloatingHeart(container) {
+    const heart = document.createElement('div');
+    heart.className = 'floating-heart';
+    heart.innerHTML = '❤️';
+    
+    // Random position
+    const startX = Math.random() * 100;
+    const xOffset = (Math.random() - 0.5) * 80; // -40px to +40px
+    
+    heart.style.left = `${startX}%`;
+    heart.style.setProperty('--x-offset', `${xOffset}px`);
+    
+    container.appendChild(heart);
+    
+    // Remove heart after animation
+    setTimeout(() => {
+        heart.remove();
+    }, 3000);
+}
+
+// Add message to DOM with livestream effect
 function addMessageToDOM(name, count, attend, message, timestamp) {
     if (!guestbook) return;
     
     const messageDiv = document.createElement('div');
-    messageDiv.className = 'guest-message fade-in';
+    messageDiv.className = 'guest-message';
     
-    const attendText = attend === 'yes' ? '✓ Tham dự' : '✗ Không tham dự';
+    const attendText = attend === 'yes' ? '✓ Tham dự' : '✗ Không tham dú';
     
     messageDiv.innerHTML = `
         <div class="message-header">
@@ -117,6 +138,29 @@ function addMessageToDOM(name, count, attend, message, timestamp) {
     `;
     
     guestbook.insertBefore(messageDiv, guestbook.firstChild);
+    
+    // Trigger animation
+    setTimeout(() => {
+        messageDiv.classList.add('show');
+    }, 10);
+    
+    // Create floating hearts (2-3 hearts)
+    const heartCount = Math.floor(Math.random() * 2) + 2; // 2 or 3 hearts
+    for (let i = 0; i < heartCount; i++) {
+        setTimeout(() => {
+            createFloatingHeart(guestbook);
+        }, i * 200); // Stagger hearts
+    }
+    
+    // Auto scroll to top to show new message
+    if (guestbook.scrollTop === 0 || guestbook.scrollTop < 50) {
+        // Already at top, no need to scroll
+    } else {
+        guestbook.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
 }
 
 // Save message to localStorage
@@ -234,6 +278,22 @@ if (document.readyState === 'loading') {
 
 // Make export function available globally
 window.exportMessagesToJSON = exportMessagesToJSON;
+
+// Random floating hearts for ambiance
+function startRandomHearts() {
+    const guestbook = document.getElementById('guestbook');
+    if (!guestbook) return;
+    
+    setInterval(() => {
+        // Random chance to create heart (30% every 3 seconds)
+        if (Math.random() < 0.3) {
+            createFloatingHeart(guestbook);
+        }
+    }, 3000);
+}
+
+// Start random hearts after page loads
+setTimeout(startRandomHearts, 2000);
 
 // Scroll animations - giống template
 const observerOptions = {
