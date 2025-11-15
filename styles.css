@@ -2180,18 +2180,21 @@ body {
 
 /* Livestream style message */
 .guest-message {
-    background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%) !important;
-    padding: 16px 18px !important;
-    border-radius: 12px !important;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06) !important;
+    background: rgba(255, 105, 180, 0.85) !important; /* Pink transparent */
+    padding: 12px 18px !important;
+    border-radius: 20px !important;
+    box-shadow: 0 3px 12px rgba(255, 105, 180, 0.3) !important;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    border-left: 4px solid #ff9a9e !important;
+    border: 2px solid rgba(255, 182, 193, 0.5) !important;
     position: relative !important;
     overflow: visible !important;
     animation: slideInMessage 0.8s ease-out forwards, floatMessage 2.5s ease-in-out infinite !important;
     opacity: 1 !important;
     transform: translateX(0) scale(1) !important;
     flex-shrink: 0 !important;
+    display: inline-block !important; /* Auto width based on content */
+    max-width: 90% !important;
+    width: auto !important;
 }
 
 @keyframes slideInMessage {
@@ -2219,9 +2222,9 @@ body {
 }
 
 .guest-message:hover {
-    box-shadow: 0 6px 20px rgba(255, 154, 158, 0.15);
+    background: rgba(255, 105, 180, 0.95) !important;
+    box-shadow: 0 6px 20px rgba(255, 105, 180, 0.4) !important;
     transform: translateX(5px) scale(1.02) !important;
-    border-left-width: 6px;
     animation-play-state: paused !important;
 }
 
@@ -2234,11 +2237,18 @@ body {
 
 .message-text {
     font-size: 1rem;
-    font-weight: 500;
-    color: #333;
+    font-weight: 400;
+    color: #ffffff !important; /* White text */
     font-family: 'Quicksand', sans-serif;
-    line-height: 1.4;
+    line-height: 1.5;
     word-break: break-word;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Bold name styling */
+.message-text strong {
+    font-weight: 700;
+    color: #ffffff;
 }
 
 /* Remove unused styles */

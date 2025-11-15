@@ -141,8 +141,10 @@ function addMessageToDOM(name, count, attend, message, timestamp) {
     const messageDiv = document.createElement('div');
     messageDiv.className = 'guest-message';
     
-    // Display as "Name: Message" format (single line)
-    const displayText = message ? `${name}: ${message}` : `${name}`;
+    // Display as "Name: Message" format with bold name
+    const displayText = message 
+        ? `<strong>${name}</strong>: ${message}` 
+        : `<strong>${name}</strong>`;
     
     messageDiv.innerHTML = `
         <div class="message-header">
