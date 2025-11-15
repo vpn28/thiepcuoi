@@ -2181,7 +2181,7 @@ body {
 
 /* Livestream style message */
 .guest-message {
-    background: rgba(255, 105, 180, 0.85) !important; /* Pink transparent */
+    background: rgba(222, 147, 184, 0.85) !important; /* Pink transparent */
     padding: 12px 18px !important;
     border-radius: 20px !important;
     box-shadow: 0 3px 12px rgba(255, 105, 180, 0.3) !important;
@@ -2260,6 +2260,18 @@ body {
 .message-icon,
 .message-content {
     display: none;
+}
+
+/* === Hearts Overlay Container === */
+.hearts-overlay-container {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none !important;
+    z-index: 1000 !important;
+    overflow: visible !important; /* Allow hearts to escape */
 }
 
 /* === Floating Hearts Animation === */

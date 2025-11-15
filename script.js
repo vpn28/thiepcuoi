@@ -126,12 +126,31 @@ function createFloatingHeart(container) {
     heart.style.bottom = '0';
     heart.style.setProperty('--x-offset', `${xOffset}px`);
     
-    container.appendChild(heart);
+    // Append to body or a wrapper that's not clipped by overflow:hidden
+    const heartsContainer = getOrCreateHeartsContainer(container);
+    heartsContainer.appendChild(heart);
     
     // Remove heart after animation
     setTimeout(() => {
         heart.remove();
     }, 4000);
+}
+
+// Get or create hearts overlay container
+function getOrCreateHeartsContainer(messageContainer) {
+    let heartsOverlay = document.getElementById('hearts-overlay');
+    
+    if (!heartsOverlay) {
+        heartsOverlay = document.createElement('div');
+        heartsOverlay.id = 'hearts-overlay';
+        heartsOverlay.className = 'hearts-overlay-container';
+        
+        // Position it over the message container
+        messageContainer.parentElement.style.position = 'relative';
+        messageContainer.parentElement.insertBefore(heartsOverlay, messageContainer);
+    }
+    
+    return heartsOverlay;
 }
 
 // Add message to DOM with livestream effect
