@@ -2142,6 +2142,7 @@ body {
     padding-right: 8px;
     position: relative;
     animation: scrollMessagesUp 15s linear infinite !important;
+    align-items: flex-start !important; /* Align items to start, not stretch */
 }
 
 /* Continuous scroll animation - faster */
@@ -2193,8 +2194,9 @@ body {
     transform: translateX(0) scale(1) !important;
     flex-shrink: 0 !important;
     display: inline-block !important; /* Auto width based on content */
-    max-width: 90% !important;
-    width: auto !important;
+    max-width: 85% !important; /* Maximum width */
+    width: fit-content !important; /* Fit content width */
+    min-width: auto !important; /* No minimum width */
 }
 
 @keyframes slideInMessage {
@@ -2229,10 +2231,9 @@ body {
 }
 
 .message-header {
-    display: flex;
-    align-items: center;
-    gap: 0;
+    display: inline-block !important; /* Inline to fit content */
     margin: 0;
+    width: auto !important;
 }
 
 .message-text {
@@ -2243,6 +2244,8 @@ body {
     line-height: 1.5;
     word-break: break-word;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    white-space: normal !important;
+    display: inline !important;
 }
 
 /* Bold name styling */
@@ -2263,7 +2266,7 @@ body {
 .floating-heart {
     position: absolute !important;
     font-size: 24px !important;
-    color: #ff6b9d !important;
+    color: #da9cb0 !important;
     opacity: 0 !important;
     pointer-events: none !important;
     z-index: 1000 !important;
