@@ -2112,6 +2112,16 @@ body {
     transform: translateY(0);
 }
 
+/* Guest Messages Wrapper for Hearts Overlay */
+.guest-messages-wrapper {
+    position: relative !important;
+    max-width: 550px;
+    margin: 0 auto;
+    padding: 0 10px;
+    min-height: 500px;
+    overflow: visible !important; /* Allow hearts to escape */
+}
+
 /* Guest Messages */
 .guest-messages {
     max-width: 550px;
@@ -2315,7 +2325,7 @@ body {
 
 /* Heart container for message list */
 .message-list {
-    position: relative;
+    position: relative !important;
 }
 
 /* Sparkle effect on hover */

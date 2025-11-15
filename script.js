@@ -138,16 +138,22 @@ function createFloatingHeart(container) {
 
 // Get or create hearts overlay container
 function getOrCreateHeartsContainer(messageContainer) {
-    let heartsOverlay = document.getElementById('hearts-overlay');
+    let heartsOverlay = document.querySelector('.hearts-overlay-container');
     
     if (!heartsOverlay) {
         heartsOverlay = document.createElement('div');
-        heartsOverlay.id = 'hearts-overlay';
         heartsOverlay.className = 'hearts-overlay-container';
         
-        // Position it over the message container
-        messageContainer.parentElement.style.position = 'relative';
-        messageContainer.parentElement.insertBefore(heartsOverlay, messageContainer);
+        // Find the wrapper and insert overlay
+        const wrapper = document.querySelector('.guest-messages-wrapper');
+        const messagesDiv = document.querySelector('.guest-messages');
+        
+        if (wrapper && messagesDiv) {
+            wrapper.insertBefore(heartsOverlay, messagesDiv);
+            console.log('✓ Hearts overlay created successfully');
+        } else {
+            console.error('❌ Cannot find wrapper or messages container');
+        }
     }
     
     return heartsOverlay;
