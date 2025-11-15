@@ -2287,13 +2287,13 @@ body {
 /* === Floating Hearts Animation === */
 .floating-heart {
     position: absolute !important;
-    font-size: 24px !important;
-    color: #da9cb0 !important;
-    opacity: 0 !important;
+    font-size: 28px !important;
+    color: #ff1493 !important; /* Bright pink for visibility */
+    opacity: 1 !important; /* Start visible for testing */
     pointer-events: none !important;
-    z-index: 1000 !important;
+    z-index: 9999 !important;
     animation: floatHeart 4s ease-in-out forwards !important;
-    text-shadow: 0 0 10px rgba(255, 107, 157, 0.5) !important;
+    text-shadow: 0 0 15px rgba(255, 20, 147, 0.8) !important;
     will-change: transform, opacity !important;
 }
 
