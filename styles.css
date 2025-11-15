@@ -2191,12 +2191,12 @@ body {
 
 /* Livestream style message */
 .guest-message {
-    background: rgba(222, 147, 184, 0.85) !important; /* Pink transparent */
+    background: rgba(236, 167, 201, 0.85) !important; /* Pink transparent */
     padding: 12px 18px !important;
     border-radius: 20px !important;
-    box-shadow: 0 3px 12px rgba(255, 105, 180, 0.3) !important;
+    box-shadow: 0 3px 12px rgba(243, 215, 229, 0.3) !important;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    border: 2px solid rgba(255, 182, 193, 0.5) !important;
+    /* border: 2px solid rgba(255, 182, 193, 0.5) !important; */
     position: relative !important;
     overflow: visible !important;
     animation: slideInMessage 0.8s ease-out forwards, floatMessage 2.5s ease-in-out infinite !important;
