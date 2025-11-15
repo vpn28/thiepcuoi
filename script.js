@@ -141,14 +141,13 @@ function addMessageToDOM(name, count, attend, message, timestamp) {
     const messageDiv = document.createElement('div');
     messageDiv.className = 'guest-message';
     
-    const attendText = attend === 'yes' ? '✓ Tham dự' : '✗ Không tham dự';
+    // Display as "Name: Message" format (single line)
+    const displayText = message ? `${name}: ${message}` : `${name}`;
     
     messageDiv.innerHTML = `
         <div class="message-header">
-            <h4 class="guest-name">${name}</h4>
-            <span class="guest-info">${attendText}</span>
+            <span class="message-text">${displayText}</span>
         </div>
-        ${message ? `<p class="message-content">${message}</p>` : ''}
     `;
     
     guestbook.appendChild(messageDiv);
@@ -157,7 +156,7 @@ function addMessageToDOM(name, count, attend, message, timestamp) {
     const heartCount = Math.floor(Math.random() * 3) + 3;
     for (let i = 0; i < heartCount; i++) {
         setTimeout(() => {
-            createFloatingHeart(guestbook);
+            createFloatingHeart(document.querySelector('.guest-messages'));
         }, i * 300);
     }
 }
@@ -295,8 +294,8 @@ window.exportMessagesToJSON = exportMessagesToJSON;
 
 // Random floating hearts for ambiance
 function startRandomHearts() {
-    const guestbook = document.getElementById('guestbook');
-    if (!guestbook) return;
+    const guestMessagesContainer = document.querySelector('.guest-messages');
+    if (!guestMessagesContainer) return;
     
     // Create hearts more frequently
     setInterval(() => {
@@ -305,7 +304,7 @@ function startRandomHearts() {
             const count = Math.floor(Math.random() * 2) + 1; // 1-2 hearts
             for (let i = 0; i < count; i++) {
                 setTimeout(() => {
-                    createFloatingHeart(guestbook);
+                    createFloatingHeart(guestMessagesContainer);
                 }, i * 400);
             }
         }

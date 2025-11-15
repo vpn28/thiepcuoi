@@ -2132,6 +2132,7 @@ body {
     position: relative;
     overflow: hidden !important;
     max-height: 500px;
+    z-index: 1;
 }
 
 .message-list {
@@ -2227,33 +2228,25 @@ body {
 .message-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 8px;
+    gap: 0;
+    margin: 0;
 }
 
-.guest-name {
+.message-text {
     font-size: 1rem;
-    font-weight: 600;
-    color: #ff9a9e;
-    margin: 0;
-}
-
-.guest-info {
-    font-size: 0.8rem;
-    color: #999;
+    font-weight: 500;
+    color: #333;
     font-family: 'Quicksand', sans-serif;
+    line-height: 1.4;
+    word-break: break-word;
 }
 
-.message-icon {
-    font-size: 1.2rem;
-}
-
+/* Remove unused styles */
+.guest-name,
+.guest-info,
+.message-icon,
 .message-content {
-    font-size: 0.9rem;
-    color: #555;
-    line-height: 1.5;
-    margin: 0;
-    font-family: 'Quicksand', sans-serif;
+    display: none;
 }
 
 /* === Floating Hearts Animation === */
@@ -2263,9 +2256,10 @@ body {
     color: #ff6b9d !important;
     opacity: 0 !important;
     pointer-events: none !important;
-    z-index: 100 !important;
+    z-index: 1000 !important;
     animation: floatHeart 4s ease-in-out forwards !important;
     text-shadow: 0 0 10px rgba(255, 107, 157, 0.5) !important;
+    will-change: transform, opacity !important;
 }
 
 @keyframes floatHeart {
