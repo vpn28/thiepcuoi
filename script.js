@@ -363,3 +363,67 @@ document.querySelectorAll('.fade-in, .slide-up, .slide-right, .slide-left').forE
     el.style.animationPlayState = 'paused';
     observer.observe(el);
 });
+
+// Auto scroll down slowly on first visit
+function autoScrollOnFirstVisit() {
+    // Check if this is the first visit
+    const hasVisited = sessionStorage.getItem('hasVisited');
+    
+    console.log('🔍 Auto scroll check - hasVisited:', hasVisited);
+    
+    if (!hasVisited) {
+        // Mark as visited for this session
+        sessionStorage.setItem('hasVisited', 'true');
+        console.log('✅ First visit detected - starting auto scroll');
+        
+        // Wait a bit for page to fully load
+        setTimeout(() => {
+            const documentHeight = document.documentElement.scrollHeight;
+            const windowHeight = window.innerHeight;
+            const maxScroll = documentHeight - windowHeight;
+            
+            console.log('📏 Document height:', documentHeight);
+            console.log('📐 Window height:', windowHeight);
+            console.log('📊 Max scroll:', maxScroll);
+            
+            const scrollDuration = 6000; // 6 seconds for very smooth scroll
+            const targetScroll = maxScroll * 0.9; // Scroll to 90% of page
+            const startPosition = window.pageYOffset;
+            const startTime = performance.now();
+            
+            console.log('🎯 Target scroll position:', targetScroll);
+            console.log('🚀 Starting auto scroll...');
+            
+            function smoothScroll(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / scrollDuration, 1);
+                
+                // Easing function for very smooth scroll (ease-out for natural deceleration)
+                const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+                
+                const currentScroll = startPosition + (targetScroll * easeOutQuart);
+                
+                window.scrollTo({
+                    top: currentScroll,
+                    behavior: 'auto'
+                });
+                
+                if (progress < 1) {
+                    requestAnimationFrame(smoothScroll);
+                } else {
+                    console.log('✨ Auto scroll completed!');
+                }
+            }
+            
+            requestAnimationFrame(smoothScroll);
+        }, 2000); // Start after 2 seconds to ensure everything is loaded
+    } else {
+        console.log('⏭️ Not first visit - skipping auto scroll');
+    }
+}
+
+// Run auto scroll when page loads
+window.addEventListener('load', () => {
+    console.log('🌐 Page loaded - initializing auto scroll');
+    autoScrollOnFirstVisit();
+});

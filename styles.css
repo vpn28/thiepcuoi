@@ -115,7 +115,7 @@
 body {
     font-family: 'Montserrat', sans-serif;
     background: #ffffff;
-    color: #333;
+    /* color: #333; */
     overflow-x: hidden;
     scroll-behavior: smooth;
 }
@@ -124,7 +124,7 @@ body {
 .audio-control {
     position: fixed;
     top: 10px;
-    right: 10px;
+    right: 45px;
     width: 40px;
     height: 40px;
     background: rgba(165, 165, 165, 0.3);
@@ -159,10 +159,14 @@ body {
 
 /* Container */
 .wedding-container {
-    max-width: 100%;
-    margin: 0 auto;
+    max-width: 500px;
+    width: 100%;
+    height: 100vh;
     background: #fff;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+    /* overflow: hidden; */
+    margin: auto;
+
 }
 
 /* Hero Section */
@@ -274,12 +278,23 @@ body {
 }
 
 .couple-names-hero .name-text {
-    font-family: 'Mallong', serif;
-    font-size: 1.5rem;
-    color: #fff;
-    font-weight: 400;
-    margin: 0;
-    line-height: 1.2;
+    height: auto;
+    width: 100%;
+    min-width: 20px;
+    color: rgb(255, 255, 255);
+    font-size: 25px;
+    text-shadow: rgba(0, 0, 0, 0) 0px 0px 2px;
+    font-weight: 500;
+    font-family: Signora;
+    text-align: center;
+    line-height: normal;
+    letter-spacing: 0px;
+    text-transform: none;
+    text-decoration: none;
+    font-style: normal;
+    pointer-events: none;
+    overflow: hidden;
+    word-break: break-word;
 }
 
 .couple-names-hero .label-text {
@@ -301,7 +316,7 @@ body {
     z-index: 2;
     text-align: center;
     font-family: 'Signora', sans-serif;
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     color: #fff;
     margin: 0;
     font-weight: 300;
