@@ -124,7 +124,7 @@ body {
 .audio-control {
     position: fixed;
     top: 10px;
-    right: 45px;
+    right: 10px;
     width: 40px;
     height: 40px;
     background: rgba(165, 165, 165, 0.3);
