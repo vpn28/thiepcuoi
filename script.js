@@ -387,7 +387,7 @@ function autoScrollOnFirstVisit() {
             console.log('📊 Max scroll:', maxScroll);
             
             // Scroll gradually with constant slow speed
-            const scrollSpeed = 25; // pixels per frame (slower = smaller number)
+            const scrollSpeed = 1; // pixels per frame (slower = smaller number)
             const targetScroll = maxScroll * 0.9; // Scroll to 90% of page
             let currentScroll = window.pageYOffset;
             
