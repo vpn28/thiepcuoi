@@ -386,36 +386,37 @@ function autoScrollOnFirstVisit() {
             console.log('📐 Window height:', windowHeight);
             console.log('📊 Max scroll:', maxScroll);
             
-            const scrollDuration = 6000; // 6 seconds for very smooth scroll
+            // Scroll gradually with constant slow speed
+            const scrollSpeed = 25; // pixels per frame (slower = smaller number)
             const targetScroll = maxScroll * 0.9; // Scroll to 90% of page
-            const startPosition = window.pageYOffset;
-            const startTime = performance.now();
+            let currentScroll = window.pageYOffset;
             
             console.log('🎯 Target scroll position:', targetScroll);
-            console.log('🚀 Starting auto scroll...');
+            console.log('🚀 Starting gradual auto scroll...');
             
-            function smoothScroll(currentTime) {
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / scrollDuration, 1);
+            function gradualScroll() {
+                currentScroll += scrollSpeed;
                 
-                // Easing function for very smooth scroll (ease-out for natural deceleration)
-                const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-                
-                const currentScroll = startPosition + (targetScroll * easeOutQuart);
+                // Stop when reached target
+                if (currentScroll >= targetScroll) {
+                    window.scrollTo({
+                        top: targetScroll,
+                        behavior: 'smooth'
+                    });
+                    console.log('✨ Auto scroll completed!');
+                    return;
+                }
                 
                 window.scrollTo({
                     top: currentScroll,
                     behavior: 'auto'
                 });
                 
-                if (progress < 1) {
-                    requestAnimationFrame(smoothScroll);
-                } else {
-                    console.log('✨ Auto scroll completed!');
-                }
+                // Continue scrolling
+                requestAnimationFrame(gradualScroll);
             }
             
-            requestAnimationFrame(smoothScroll);
+            requestAnimationFrame(gradualScroll);
         }, 2000); // Start after 2 seconds to ensure everything is loaded
     } else {
         console.log('⏭️ Not first visit - skipping auto scroll');
