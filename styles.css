@@ -160,13 +160,20 @@ body {
 
 /* Container */
 .wedding-container {
-    max-width: 500px;
-    width: 100vh;
-    height: 100vh;
+    max-width: 100%;
+    width: 100%;
+    min-height: 100vh;
     background: #fff;
     position: relative;
-    margin: auto;
+    margin: 0 auto;
+    overflow-x: hidden;
+}
 
+/* Ensure all sections fit within container */
+.wedding-container > section {
+    width: 100%;
+    max-width: 100%;
+    /* overflow-x: hidden; */
 }
 
 /* Hero Section */
@@ -344,12 +351,14 @@ body {
     padding: 40px 0 0;
     text-align: center;
     background: #ffffff;
+    width: 100%;
+    max-width: 100%;
 }
 
 .wedding-info {
     display: flex;
     justify-content: space-between;
-    padding: 0 40px;
+    padding: 0 clamp(20px, 5vw, 40px);
     margin-bottom: 20px;
     font-family: 'Mallong', serif;
     font-size: 1rem;
@@ -420,6 +429,9 @@ body {
 /* Story Section */
 .story-section {
     padding: 40px 20px;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 /* Align story heading + label as a compact block
@@ -565,6 +577,9 @@ body {
 .dearest-section {
     padding: 60px 20px;
     position: relative;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 /* Hide old markup inside this section (kept in HTML for content) */
@@ -574,7 +589,7 @@ body {
 .dearest-composition {
     position: relative;
     width: 100%;
-    max-width: 450px;
+    max-width: min(450px, 95%);
     margin: 0 auto;
     height: 580px;
 }
@@ -728,12 +743,15 @@ body {
     padding: 40px 20px;
     background: #ffffff;
     text-align: center;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 .info-header {
     display: flex;
     justify-content: space-between;
-    padding: 8px 30px;
+    padding: 8px clamp(15px, 4vw, 30px);
     margin-bottom: 18px;
     font-family: 'Mallong', serif;
     font-size: 1rem;
@@ -748,7 +766,7 @@ body {
 .info-photos-container {
     position: relative;
     width: 100%;
-    max-width: 500px;
+    max-width: min(500px, 95%);
     margin: 0 auto 20px;
     display: flex;
     flex-direction: row;
@@ -846,6 +864,7 @@ body {
 .perfect-section {
     position: relative;
     width: 100%;
+    max-width: 100%;
     height: 90%;
     min-height: 600px;
     overflow: hidden;
@@ -922,7 +941,7 @@ body {
     border-radius: 15px;
     z-index: 154;   
     position: absolute;
-    bottom: 10px;
+    top: 340px;
     right: 10px;
 }
 
@@ -1027,17 +1046,21 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    bottom: 30px;
 }
 
 .gallery-wrapper {
     position: relative;
-    /* width: 90%; */
-    /* max-width: 900px; */
+    width: 100%;
+    max-width: 100%;
     display: flex;
     flex-direction: row;
     /* left-content + vertical-text */
     background: #fff;
-    overflow: visible;
+    overflow: hidden;
 }
 
 /* Centered SVG mint background block */
@@ -1146,9 +1169,9 @@ body {
 
 /* Right side - Vertical text on mint background box */
 .gallery-vertical-text {
-    position: absolute;
-    right: 0px;
-    top: 400px;
+       position: absolute;
+    right: -30px;
+    top: auto;
     bottom: 0;
     width: 150px;
     display: flex;
@@ -1156,14 +1179,14 @@ body {
     justify-content: center;
     align-items: center;
     gap: 25px;
-    background: transparent; 
+    background: transparent;
     font-family: 'Montserrat', sans-serif;
     font-size: 25px;
     font-weight: 600;
     letter-spacing: 3px;
     color: #0101016b;
     text-transform: uppercase;
-    padding: 40px 20px;
+    /* padding: 40px 20px; */
     z-index: 1;
 }
 
@@ -1199,15 +1222,18 @@ body {
         font-size: 22px;
     }
 
-    .gallery-vertical-text {
+    /* .gallery-vertical-text {
         display: none;
-    }
+    } */
 }
 
 /* Calendar Section */
 .calendar-section {
     padding: 60px 20px;
     text-align: center;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 .calendar-badge {
@@ -1261,7 +1287,8 @@ body {
     border-radius: 20px;
     padding: clamp(20px, 5vw, 40px);
     margin: 50px auto;
-    max-width: 900px;
+    max-width: min(900px, 90%);
+    width: 100%;
     box-shadow: 0 10px 40px rgba(0,0,0,0.08);
     position: relative;
     overflow: hidden;
@@ -1844,6 +1871,9 @@ body {
     padding: 20px 20px;
     background: #ffffff;
     text-align: center;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 .forever-title {
@@ -1920,6 +1950,9 @@ body {
 /* Sunshine Section */
 .sunshine-section {
     padding: 0 0 0;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 .couple-photo {
@@ -1967,6 +2000,9 @@ body {
 .rsvp-section {
     padding: 60px 20px;
     background: linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%);
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 .rsvp-subtitle {
@@ -1979,7 +2015,8 @@ body {
 }
 
 .rsvp-form {
-    max-width: 450px;
+    max-width: min(450px, 95%);
+    width: 100%;
     margin: 0 auto 45px;
     background: #ffffff;
     padding: 32px 28px;
@@ -2395,10 +2432,13 @@ body {
     /* background: #f9f9f9; */
     position: relative;
     /* overflow: hidden; */
+    width: 100%;
+    max-width: 100%;
 }
 
 .contact-wrapper {
-    max-width: 700px;
+    max-width: min(700px, 95%);
+    width: 100%;
     margin: 0 auto;
     position: relative;
 }
@@ -2676,11 +2716,13 @@ body {
     font-family: 'Quicksand', sans-serif;
     text-align: center;
     overflow: hidden;
+    width: 100%;
+    max-width: 100%;
 }
 
 .gifting-wrapper {
-    width: 90%;
-    max-width: 720px;
+    width: min(90%, 720px);
+    max-width: 100%;
     margin: 0 auto;
 }
 
