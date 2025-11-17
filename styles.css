@@ -1098,7 +1098,8 @@ body {
 
 /* Center text */
 .gallery-center-text {
-    margin: 0% 0 0% 0%;
+    margin: 20px 0 20px 0%;
+    left: 30px;
     /* indent 5% */
     position: relative;
     z-index: 1;
@@ -1144,10 +1145,10 @@ body {
 }
 
 /* Right side - Vertical text on mint background box */
-/* .gallery-vertical-text {
+.gallery-vertical-text {
     position: absolute;
-    right: 20px;
-    top: 0;
+    right: 0px;
+    top: 400px;
     bottom: 0;
     width: 150px;
     display: flex;
@@ -1157,22 +1158,22 @@ body {
     gap: 25px;
     background: transparent; 
     font-family: 'Montserrat', sans-serif;
-    font-size: 11px;
+    font-size: 25px;
     font-weight: 600;
     letter-spacing: 3px;
-    color: #888;
+    color: #0101016b;
     text-transform: uppercase;
     padding: 40px 20px;
     z-index: 1;
-} */
+}
 
-/* .gallery-vertical-text span {
+.gallery-vertical-text span {
     display: block;
     writing-mode: vertical-rl;
     text-orientation: mixed;
-    transform: rotate(180deg);
+    transform: rotate(360deg);
     white-space: nowrap;
-} */
+}
 
 /* Responsive for Gallery Section */
 @media (max-width: 768px) {
@@ -1254,58 +1255,47 @@ body {
     font-style: italic;
 }
 
-/* Event Info Container - 2 boxes side by side */
-.event-info-container {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    margin: 50px 0;
-    flex-wrap: wrap;
-    padding: 0 20px;
-}
-
-.event-box {
-    position: relative;
+/* Event Info - Unified Box with 2 Columns */
+.event-unified-box {
+    background: white;
     border-radius: 20px;
-    padding: 40px 30px;
-    min-width: 300px;
-    max-width: 340px;
+    padding: 40px;
+    margin: 50px auto;
+    max-width: 900px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
     overflow: hidden;
 }
 
-.event-box::before {
+.event-unified-box::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     height: 5px;
-    background: linear-gradient(90deg, #ff6b9d, #c44569);
+    background: linear-gradient(90deg, #ff6b9d, #4facfe);
 }
 
-.bride-box {
-    background: linear-gradient(135deg, #ffeef8 0%, #ffe0f0 100%);
-    border: 2px solid rgba(255, 182, 193, 0.3);
+.event-columns {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 40px;
+    align-items: start;
 }
 
-.bride-box::before {
-    background: linear-gradient(90deg, #ff6b9d, #ffa5d8);
+.event-column {
+    text-align: center;
 }
 
-.groom-box {
-    background: linear-gradient(135deg, #e3f2fd 0%, #d0e9ff 100%);
-    border: 2px solid rgba(100, 181, 246, 0.3);
-}
-
-.groom-box::before {
-    background: linear-gradient(90deg, #4facfe, #00f2fe);
-}
-
-.event-box:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+.event-divider {
+    width: 1px;
+    background: linear-gradient(to bottom, 
+        transparent 0%, 
+        rgba(0,0,0,0.1) 20%, 
+        rgba(0,0,0,0.1) 80%, 
+        transparent 100%);
+    align-self: stretch;
 }
 
 .event-icon {
@@ -1322,7 +1312,7 @@ body {
 
 .event-title {
     font-family: 'Belinda Avenue', serif;
-    font-size: 2rem;
+    font-size: 1.2rem;
     color: #2c3e50;
     margin-bottom: 8px;
     font-weight: 700;
@@ -1331,7 +1321,7 @@ body {
 
 .event-subtitle {
     font-family: 'Quicksand', sans-serif;
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: #777;
     text-align: center;
     margin-bottom: 20px;
@@ -1358,7 +1348,7 @@ body {
 
 .event-date-num {
     font-family: 'Playfair Display', serif;
-    font-size: 2.4rem;
+    font-size: 1.3rem;
     color: #d4697c;
     font-weight: 700;
     margin: 12px 0;
@@ -1374,10 +1364,26 @@ body {
 }
 
 .event-lunar {
-    font-size: 1rem;
+    font-size: 0.7rem;
     color: #888;
     font-family: 'Quicksand', sans-serif;
     margin-top: 8px;
+}
+
+.event-location {
+    font-size: 0.85rem;
+    color: #555;
+    font-family: 'Quicksand', sans-serif;
+    margin-top: 12px;
+    font-weight: 500;
+}
+
+.ceremony-time {
+    font-size: 0.95rem;
+    color: #333;
+    font-family: 'Quicksand', sans-serif;
+    margin: 5px 0;
+    font-weight: 600;
 }
 
 /* Ceremony Box */
@@ -1451,7 +1457,7 @@ body {
 }
 
 .ceremony-time {
-    font-size: 1.5rem;
+    font-size: 1rem;
     color: #333;
     font-family: 'Quicksand', sans-serif;
     margin: 15px 0;
@@ -1659,22 +1665,22 @@ body {
     opacity: 0.9;
 }
 
-.event-title {
+/* .event-title {
     font-size: 1.6rem;
     margin-bottom: 6px;
-}
-
+} */
+/* 
 .event-subtitle {
     font-size: 0.95rem;
     color: #6b7280;
     margin-bottom: 16px;
-}
+} */
 
-.event-day {
+/* .event-day {
     font-size: 1rem;
     color: #6b7280;
     margin: 6px 0;
-}
+} */
 
 /* .event-date-num {
     font-size: 3rem;
@@ -1691,11 +1697,11 @@ body {
     font-weight: 700;
 }
 
-.event-lunar {
+/* .event-lunar {
     font-size: 0.95rem;
     color: #8b8b8b;
     margin-top: 6px;
-}
+} */
 
 /* Ceremony Box — simpler, elegant */
 .ceremony-box {
@@ -1735,12 +1741,12 @@ body {
     height: 3px;
 }
 
-.ceremony-time {
+/* .ceremony-time {
     font-size: 1.6rem;
     color: #1f2937;
     margin: 12px 0;
     font-weight: 700;
-}
+} */
 
 /* .ceremony-date {
     font-size: 1.1rem;
@@ -1814,7 +1820,7 @@ body {
 }
 
 /* Larger screens: scale up key typography */
-@media (min-width: 992px) {
+/* @media (min-width: 992px) {
     .calendar-main-title { font-size: 3.4rem; }
     .event-title { font-size: 1.8rem; }
     .event-date-num { font-size: 3.8rem; }
@@ -1825,13 +1831,13 @@ body {
 }
 
 /* Respect reduced motion */
-@media (prefers-reduced-motion: reduce) {
+/* @media (prefers-reduced-motion: reduce) {
     .event-box:hover,
     .countdown-item:hover,
     .ceremony-box:hover { transform: none; }
     .event-icon,
     .ceremony-icon { animation: none !important; }
-}
+}  */
 
 /* Forever Section */
 .forever-section {
@@ -2879,35 +2885,9 @@ body {
 }
 
 /* Responsive */
-@media (max-width: 768px) {
-    .main-title {
-        font-size: 2.5rem;
-    }
 
-    .section-heading {
-        font-size: 1.8rem;
-    }
 
-    .sweet-text {
-        font-size: 3.5rem;
-    }
-
-    .calendar-grid {
-        max-width: 300px;
-        gap: 5px;
-    }
-
-    .account-box {
-        width: 100%;
-        max-width: 320px;
-    }
-
-    .account-qr-image {
-        max-width: 140px;
-    }
-}
-
-@media (max-width: 600px) {
+/* @media (max-width: 600px) {
     .gifting-wrapper {
         width: 95%;
     }
@@ -2935,4 +2915,4 @@ body {
     .account-qr-image {
         max-width: 140px;
     }
-}
+} */
