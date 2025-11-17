@@ -390,11 +390,38 @@ function autoScrollOnFirstVisit() {
             const scrollSpeed = 1; // pixels per frame (slower = smaller number)
             const targetScroll = maxScroll * 0.9; // Scroll to 90% of page
             let currentScroll = window.pageYOffset;
+            let isScrolling = true;
+            let animationFrameId = null;
             
             console.log('🎯 Target scroll position:', targetScroll);
             console.log('🚀 Starting gradual auto scroll...');
             
+            // Function to stop auto scroll
+            function stopAutoScroll() {
+                if (isScrolling) {
+                    isScrolling = false;
+                    if (animationFrameId) {
+                        cancelAnimationFrame(animationFrameId);
+                    }
+                    console.log('⏹️ Auto scroll stopped by user interaction');
+                    
+                    // Remove event listeners after stopping
+                    document.removeEventListener('click', stopAutoScroll);
+                    document.removeEventListener('touchstart', stopAutoScroll);
+                    document.removeEventListener('wheel', stopAutoScroll);
+                    document.removeEventListener('keydown', stopAutoScroll);
+                }
+            }
+            
+            // Add event listeners to detect user interaction
+            document.addEventListener('click', stopAutoScroll, { once: true });
+            document.addEventListener('touchstart', stopAutoScroll, { once: true });
+            document.addEventListener('wheel', stopAutoScroll, { once: true });
+            document.addEventListener('keydown', stopAutoScroll, { once: true });
+            
             function gradualScroll() {
+                if (!isScrolling) return;
+                
                 currentScroll += scrollSpeed;
                 
                 // Stop when reached target
@@ -404,6 +431,7 @@ function autoScrollOnFirstVisit() {
                         behavior: 'smooth'
                     });
                     console.log('✨ Auto scroll completed!');
+                    stopAutoScroll();
                     return;
                 }
                 
@@ -413,7 +441,7 @@ function autoScrollOnFirstVisit() {
                 });
                 
                 // Continue scrolling
-                requestAnimationFrame(gradualScroll);
+                animationFrameId = requestAnimationFrame(gradualScroll);
             }
             
             requestAnimationFrame(gradualScroll);
