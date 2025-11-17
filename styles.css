@@ -2393,9 +2393,9 @@ body {
 /* === Contact Information Section === */
 .contact-section {
     padding: 40px 20px;
-    background: #f9f9f9;
+    /* background: #f9f9f9; */
     position: relative;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .contact-wrapper {
@@ -2406,7 +2406,9 @@ body {
 
 .contact-content {
     position: relative;
+    /* opacity: 0.25; */
     z-index: 1;
+    top: 30px;
 }
 
 .contact-title {
@@ -2416,6 +2418,7 @@ body {
     margin-bottom: 8px;
     color: #555;
     font-weight: 600;
+    bottom: 50px;
 }
 
 .contact-subtitle {
@@ -2429,9 +2432,11 @@ body {
 .contact-unified-box {
     background: white;
     border-radius: 12px;
-    padding: 25px 20px;
+    /* top: 50px; */
+    padding: clamp(20px, 5vw, 45px) clamp(15px, 3vw, 20px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     border: 1px solid #f0f0f0;
+    opacity: 0.8;
 }
 
 .contact-columns {
