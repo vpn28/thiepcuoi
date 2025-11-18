@@ -5,6 +5,19 @@ const weddingDate = new Date('2025-12-21T11:30:00');
 const audioControl = document.getElementById('audioControl');
 const bgMusic = document.getElementById('bgMusic');
 
+// Auto play audio when page loads
+window.addEventListener('load', () => {
+    // Try to auto play (modern browsers may block this)
+    bgMusic.play()
+        .then(() => {
+            console.log('🎵 Audio auto-played successfully');
+            audioControl.classList.add('playing');
+        })
+        .catch((error) => {
+            console.log('⚠️ Auto-play blocked by browser. User must click to play.', error);
+        });
+});
+
 audioControl.addEventListener('click', () => {
     if (bgMusic.paused) {
         bgMusic.play().catch(() => {});
