@@ -14,7 +14,7 @@ const WEDDING_IMAGES = {
 
     // Love Story Section
     story: {
-        main: "https://cdn.cinelove.me/templates/assets/7e275458-268a-4dad-b147-1af6ad9abb46/33108cfa-eebb-49f7-8d94-da847ff81905.jpeg",
+        main: "https://lh3.googleusercontent.com/rd-d/ALs6j_GEbE-XcSCksW9fZfKdTppkeSiMg3Lqhlye93bgKHLCDGLvbH9Z42b85ncoGlIBrudb9PyIDgFGa_SK1bH3W_-nOfXOaoZgiaWOBRPmLmkLodSLQi0GTeK2AOD3J2wy6J5kDsNAB73ivdeXGF_hRHd5l3B9cK8rARPhjAZb1cqqwrTzOaPDVpPayB46WQY4-tV-N2l-Dd39yROg8Tg0lAFYzW-toeikiF3YK9GJAYsJtu3f6bdYry8VT9nwLYwQZXtjTVebw8ZmsSekhwQnUrSZRKh5uaVSRaQL91hrtP6ubk4DKFA_O2ET-JoBtnWKasfUmQF1dXzyXdhuBNMx8f4bOcb6YR9UWN7xjYVkj0HNkcaRTgEFVgUhVnqtV8U87Wamjh9bvuOi0Q09HLTnImP4-ozPrkf91Wcwt3IHt4RpMqU6_gnbIw5z-3PErq7tUhn2eEzliLlfjd9ZKHgred_x5HWOd_UIJp9c4clYu4H-FN0M-byqW0oxbbG8sQmk7XY1WYpI7cyKfTbo_wwenMN1dW3zh3Aje2BVZhWqy4ASOwmI50jmiq7BRZWwB9QRZjhGiK9u5J0lCg-ySpq7VK_v3yqKaWPtFBrQ81xjXdFgYIhoFbBExZijzCOXRS4DJ1KGqWzuFYE_PnjFsRaqnQ-g8f7axC34wygJ2AydDlor3FdlDuzku3R4m0BrgNRWVw0C3b4XxX3G6lpMZJU-E9-WmbR3Aqz6bHDdSRO7RLGYdmENm73ijKEnqdp-lMqD62mauAGGxUxykeOcyCWB23GRh9MM-8Njpc0DhOZPY8n59_3IUhoYfsxGkzmGdbR-fOP3h1LxMaV25-v6VmsYiCgtBLv6_EqcGXXXkuUu0Xt5nFMwzbRDtGc1x50SeWZGFPF-ovSFITGtZ830LmoTyDiJau_IvXsNN0DcQzfO6q6eGhwRACZjzQcDFKulSHyAGjkxH-5hCD1iToh6q7u-nnq6PBBfet9cumoJaPPfwDuB2HMjc5hke1AS65CbdQBvgdeB542T2Uyw=w4000-h6000",
         decorationIcon: "https://cdn.cinelove.me/templates/assets/7e275458-268a-4dad-b147-1af6ad9abb46/4f9cc258-948c-4b45-b2fb-9075905dc57f.png"
     },
 
