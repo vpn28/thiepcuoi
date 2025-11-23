@@ -244,9 +244,9 @@ body {
 /* We got married - á»Ÿ giá»¯a vá»›i Ä‘á»™ nghiÃªng */
 .main-title {
     position: absolute;
-    top: 35%;
+    top: 18%;
     left: 30px;
-    transform: translateY(-50%) rotate(-28deg) !important;
+    transform: translateY(-50%) rotate(-10deg) !important;
     z-index: 2;
     font-family: 'katty Diona', cursive;
     font-size: 4rem;

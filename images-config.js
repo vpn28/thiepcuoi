@@ -4,12 +4,12 @@
 const WEDDING_IMAGES = {
     // Hero Section
     hero: {
-        main: "https://cdn.cinelove.me/templates/assets/7e275458-268a-4dad-b147-1af6ad9abb46/5d65d861-da0a-460d-906f-01d503d821eb.jpeg"
+        main: "https://lh3.google.com/u/0/d/1WHktLWG89cNbtMGv8XGf9j5cn7jL0MKQ=w1920-h946-iv1?auditContext=thumbnail&auditContext=prefetch"
     },
 
     // Couple Section
     couple: {
-        main: "https://cdn.cinelove.me/templates/assets/7e275458-268a-4dad-b147-1af6ad9abb46/13f9dcdf-0bee-47c3-b511-13089aa2a0a3.jpeg"
+        main: "https://lh3.google.com/u/0/d/1NG1pouRgQW0AmYL_FFvLJ58iLcvdlICM=w3000-h6501-iv1?auditContext=thumbnail&auditContext=forDisplay"
     },
 
     // Love Story Section
