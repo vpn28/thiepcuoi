@@ -1,201 +1,75 @@
 // Wedding date
 const weddingDate = new Date('2025-12-21T11:30:00');
 
-// Audio control - MUST run BEFORE any other code
-let audioControl = null;
-let bgMusic = null;
+// Audio control
+const audioControl = document.getElementById('audioControl');
+const bgMusic = document.getElementById('bgMusic');
 
-// Function to safely get audio elements
-function getAudioElements() {
-    if (!audioControl) audioControl = document.getElementById('audioControl');
-    if (!bgMusic) bgMusic = document.getElementById('bgMusic');
-    return { audioControl, bgMusic };
-}
-
-// Main function to trigger audio play
-function triggerAudioPlay() {
-    const { audioControl, bgMusic } = getAudioElements();
+// Initialize audio
+function initAudio() {
+    if (!bgMusic) return;
     
-    if (!bgMusic) {
-        console.log('⏳ Waiting for audio element...');
-        setTimeout(triggerAudioPlay, 100);
-        return;
-    }
-    
-    console.log('🎯 Attempting to play audio...');
-    
-    // Set audio properties
-    bgMusic.autoplay = true;
+    console.log('🎵 Initializing audio...');
     bgMusic.muted = false;
     bgMusic.volume = 1;
-    bgMusic.loop = true;
     
-    // Direct play attempt
     const playPromise = bgMusic.play();
-    
     if (playPromise !== undefined) {
         playPromise
             .then(() => {
-                console.log('✅ Audio playing successfully!');
-                if (audioControl) {
-                    audioControl.classList.add('playing');
-                }
+                console.log('✅ Audio playing!');
+                if (audioControl) audioControl.classList.add('playing');
             })
-            .catch((error) => {
-                console.log('⚠️ Direct play failed:', error.name);
-                
-                // Try muted autoplay
-                bgMusic.muted = true;
-                const mutedPlayPromise = bgMusic.play();
-                
-                if (mutedPlayPromise !== undefined) {
-                    mutedPlayPromise
-                        .then(() => {
-                            console.log('✅ Audio playing (muted)');
-                            setTimeout(() => {
-                                bgMusic.muted = false;
-                                if (audioControl) {
-                                    audioControl.classList.add('playing');
-                                }
-                                console.log('✅ Audio unmuted');
-                            }, 200);
-                        })
-                        .catch((muteError) => {
-                            console.log('⚠️ Muted autoplay also failed');
-                            // Auto-trigger on first user interaction
-                            autoTriggerAudioOnFirstInteraction();
-                        });
-                }
+            .catch(e => {
+                console.log('⚠️ Play failed:', e.name);
+                setupUnmuteOnInteraction();
             });
     }
 }
 
-// Wait for any user interaction to play audio
-function waitForUserInteraction() {
-    console.log('⏳ Browser blocked autoplay, setting up auto-trigger on first interaction...');
-    
-    function attemptPlay() {
-        const { bgMusic, audioControl } = getAudioElements();
-        if (bgMusic && bgMusic.paused) {
-            console.log('👆 User interacted - playing audio now');
+// Unmute on first user interaction
+function setupUnmuteOnInteraction() {
+    const unmuteAudio = () => {
+        if (bgMusic && bgMusic.muted) {
+            console.log('👆 Unmuting audio on user interaction');
             bgMusic.muted = false;
-            bgMusic.play()
-                .then(() => {
-                    if (audioControl) {
-                        audioControl.classList.add('playing');
-                    }
-                    console.log('✅ Audio started via user interaction');
-                })
-                .catch(e => console.log('Play failed:', e));
-        }
-    }
-    
-    // Simulate user interaction by triggering play on any event
-    const events = ['click', 'touchstart', 'keydown', 'mousemove', 'scroll'];
-    events.forEach(event => {
-        document.addEventListener(event, attemptPlay, { once: true, passive: true });
-    });
-}
-
-// Alternative: Auto-trigger play with very first page interaction
-function autoTriggerAudioOnFirstInteraction() {
-    let interactionDetected = false;
-    
-    function onFirstInteraction() {
-        if (!interactionDetected) {
-            interactionDetected = true;
-            console.log('🎯 First interaction detected - auto-triggering audio');
-            
-            const { bgMusic, audioControl } = getAudioElements();
-            if (bgMusic && bgMusic.paused) {
-                bgMusic.play()
-                    .then(() => {
-                        if (audioControl) {
-                            audioControl.classList.add('playing');
-                        }
-                        console.log('✅ Audio auto-triggered');
-                    })
-                    .catch(e => console.log('Auto-trigger failed:', e));
-            }
-            
-            // Remove all listeners
-            ['click', 'touchstart', 'keydown', 'mousemove', 'scroll'].forEach(evt => {
-                document.removeEventListener(evt, onFirstInteraction);
+            if (audioControl) audioControl.classList.add('playing');
+            ['click', 'touchstart', 'keydown'].forEach(evt => {
+                document.removeEventListener(evt, unmuteAudio);
             });
         }
-    }
+    };
     
-    // Add listeners for any interaction
-    ['click', 'touchstart', 'keydown', 'mousemove', 'scroll'].forEach(event => {
-        document.addEventListener(event, onFirstInteraction, { once: true, passive: true });
+    ['click', 'touchstart', 'keydown'].forEach(event => {
+        document.addEventListener(event, unmuteAudio, { once: true });
     });
 }
 
-// Start playing ASAP
+// Initialize on load
 if (document.readyState === 'loading') {
-    // DOM still loading
-    setTimeout(triggerAudioPlay, 100);
+    document.addEventListener('DOMContentLoaded', initAudio);
 } else {
-    // DOM already loaded
-    triggerAudioPlay();
+    initAudio();
 }
 
-// Try again when window fully loads
 window.addEventListener('load', () => {
-    console.log('📄 Window loaded');
-    setTimeout(triggerAudioPlay, 300);
+    setTimeout(initAudio, 200);
 });
 
-// Set up audio control button
-document.addEventListener('DOMContentLoaded', () => {
-    const { audioControl, bgMusic } = getAudioElements();
-    const audioTriggerOverlay = document.getElementById('audioTrigger');
-    
-    // Handle audio trigger overlay click
-    if (audioTriggerOverlay) {
-        audioTriggerOverlay.addEventListener('click', (e) => {
-            e.stopPropagation();
-            console.log('👆 Overlay clicked - playing audio');
-            
-            if (bgMusic) {
-                bgMusic.play()
-                    .then(() => {
-                        console.log('✅ Audio playing!');
-                        if (audioControl) {
-                            audioControl.classList.add('playing');
-                        }
-                        // Hide overlay
-                        audioTriggerOverlay.classList.add('hidden');
-                    })
-                    .catch(e => {
-                        console.log('Play failed:', e);
-                    });
-            }
-        });
-    }
-    
-    // Handle audio control button
-    if (audioControl && bgMusic) {
-        audioControl.addEventListener('click', (e) => {
-            e.stopPropagation();
-            console.log('🔘 Audio button clicked');
-            
-            if (bgMusic.paused) {
-                bgMusic.muted = false;
-                bgMusic.play()
-                    .then(() => {
-                        audioControl.classList.add('playing');
-                        console.log('▶️ Audio playing');
-                    })
-                    .catch(e => console.log('Play failed:', e));
-            } else {
-                bgMusic.pause();
-                audioControl.classList.remove('playing');
-                console.log('⏸️ Audio paused');
-            }
-        });
-    }
-});
+// Audio button control
+if (audioControl && bgMusic) {
+    audioControl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (bgMusic.paused) {
+            bgMusic.muted = false;
+            bgMusic.play();
+            audioControl.classList.add('playing');
+        } else {
+            bgMusic.pause();
+            audioControl.classList.remove('playing');
+        }
+    });
+}
 
 // Countdown
 function updateCountdown() {
@@ -226,9 +100,8 @@ updateCountdown();
 
 // RSVP Form with Vercel Blob Storage
 let rsvpForm, guestbook;
-const API_ENDPOINT = '/api/messages'; // Vercel API endpoint
+const API_ENDPOINT = '/api/messages';
 
-// Initialize RSVP form when DOM is ready
 function initRSVPForm() {
     rsvpForm = document.getElementById('rsvpForm');
     guestbook = document.getElementById('guestbook');
@@ -238,34 +111,23 @@ function initRSVPForm() {
         return;
     }
     
-    // Handle form submission
     rsvpForm.addEventListener('submit', handleFormSubmit);
-    
-    // Load messages on initialization
     loadMessages();
 }
 
-// Load messages from Vercel Blob Storage
 async function loadMessages() {
     if (!guestbook) return;
     
     try {
-        // Fetch from Vercel API
         const response = await fetch(API_ENDPOINT);
-        
-        if (!response.ok) {
-            throw new Error('Failed to load messages');
-        }
+        if (!response.ok) throw new Error('Failed to load messages');
         
         const messages = await response.json();
-        
-        // Display all messages
         guestbook.innerHTML = '';
         messages.forEach(msg => {
             addMessageToDOM(msg.name, msg.count, msg.attend, msg.message, msg.timestamp);
         });
         
-        // Duplicate for continuous scroll
         setTimeout(() => {
             duplicateMessagesForScroll();
         }, 500);
@@ -275,14 +137,12 @@ async function loadMessages() {
     } catch (error) {
         console.error('Error loading messages:', error);
         
-        // Fallback to localStorage if API fails
         const localMessages = JSON.parse(localStorage.getItem('weddingMessages') || '[]');
         guestbook.innerHTML = '';
         localMessages.forEach(msg => {
             addMessageToDOM(msg.name, msg.count, msg.attend, msg.message, msg.timestamp);
         });
         
-        // Duplicate for continuous scroll
         setTimeout(() => {
             duplicateMessagesForScroll();
         }, 500);
@@ -291,34 +151,28 @@ async function loadMessages() {
     }
 }
 
-// Create floating heart animation
 function createFloatingHeart(container) {
     const heart = document.createElement('div');
     heart.className = 'floating-heart';
     
-    // Random heart variations
     const hearts = ['❤️', '💕', '💖', '💗', '💓', '💝'];
     heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
     
-    // Random position
-    const startX = Math.random() * 90 + 5; // 5% to 95%
-    const xOffset = (Math.random() - 0.5) * 100; // -50px to +50px
+    const startX = Math.random() * 90 + 5;
+    const xOffset = (Math.random() - 0.5) * 100;
     
     heart.style.left = `${startX}%`;
     heart.style.bottom = '0';
     heart.style.setProperty('--x-offset', `${xOffset}px`);
     
-    // Append to body or a wrapper that's not clipped by overflow:hidden
     const heartsContainer = getOrCreateHeartsContainer(container);
     heartsContainer.appendChild(heart);
     
-    // Remove heart after animation
     setTimeout(() => {
         heart.remove();
     }, 4000);
 }
 
-// Get or create hearts overlay container
 function getOrCreateHeartsContainer(messageContainer) {
     let heartsOverlay = document.querySelector('.hearts-overlay-container');
     
@@ -326,7 +180,6 @@ function getOrCreateHeartsContainer(messageContainer) {
         heartsOverlay = document.createElement('div');
         heartsOverlay.className = 'hearts-overlay-container';
         
-        // Find the wrapper and insert overlay
         const wrapper = document.querySelector('.guest-messages-wrapper');
         const messagesDiv = document.querySelector('.guest-messages');
         
@@ -341,14 +194,12 @@ function getOrCreateHeartsContainer(messageContainer) {
     return heartsOverlay;
 }
 
-// Add message to DOM with livestream effect
 function addMessageToDOM(name, count, attend, message, timestamp) {
     if (!guestbook) return;
     
     const messageDiv = document.createElement('div');
     messageDiv.className = 'guest-message';
     
-    // Display as "Name: Message" format with bold name
     const displayText = message 
         ? `<strong>${name}</strong>: ${message}` 
         : `<strong>${name}</strong>`;
@@ -361,7 +212,6 @@ function addMessageToDOM(name, count, attend, message, timestamp) {
     
     guestbook.appendChild(messageDiv);
     
-    // Create floating hearts (3-5 hearts)
     const heartCount = Math.floor(Math.random() * 3) + 3;
     for (let i = 0; i < heartCount; i++) {
         setTimeout(() => {
@@ -370,7 +220,6 @@ function addMessageToDOM(name, count, attend, message, timestamp) {
     }
 }
 
-// Duplicate messages for continuous scroll effect
 function duplicateMessagesForScroll() {
     const guestbook = document.getElementById('guestbook');
     if (!guestbook) return;
@@ -378,14 +227,12 @@ function duplicateMessagesForScroll() {
     const messages = Array.from(guestbook.children);
     if (messages.length === 0) return;
     
-    // Duplicate messages to create seamless loop
     messages.forEach(msg => {
         const clone = msg.cloneNode(true);
         guestbook.appendChild(clone);
     });
 }
 
-// Save message to localStorage
 function saveMessage(name, count, attend, message) {
     const messages = JSON.parse(localStorage.getItem('weddingMessages') || '[]');
     const newMessage = {
@@ -401,7 +248,6 @@ function saveMessage(name, count, attend, message) {
     return newMessage;
 }
 
-// Save message to Vercel Blob Storage
 async function saveMessageToCloud(name, count, attend, message) {
     try {
         const response = await fetch(API_ENDPOINT, {
@@ -425,12 +271,10 @@ async function saveMessageToCloud(name, count, attend, message) {
         return result.message;
     } catch (error) {
         console.error('Error saving to cloud:', error);
-        // Fallback to localStorage
         return saveMessage(name, count, attend, message);
     }
 }
 
-// Export messages to JSON file (no longer needed with Blob Storage, but kept for backup)
 function exportMessagesToJSON() {
     const messages = JSON.parse(localStorage.getItem('weddingMessages') || '[]');
     const jsonString = JSON.stringify(messages, null, 2);
@@ -447,7 +291,6 @@ function exportMessagesToJSON() {
     console.log('Messages exported to messages-backup.json');
 }
 
-// Handle form submission
 async function handleFormSubmit(e) {
     e.preventDefault();
     
@@ -460,70 +303,56 @@ async function handleFormSubmit(e) {
         return;
     }
     
-    // Show loading state
     const submitBtn = rsvpForm.querySelector('button[type="submit"]');
     const originalText = submitBtn.innerHTML;
     submitBtn.innerHTML = '<span>Đang gửi...</span>';
     submitBtn.disabled = true;
     
     try {
-        // Save to Vercel Blob Storage (count = null)
         const newMessage = await saveMessageToCloud(name, null, attend, message);
         
-        // Add to DOM
         addMessageToDOM(name, null, attend, message, newMessage.timestamp);
         
-        // Log to console for tracking
         console.log('New RSVP saved:', newMessage);
         
-        // Show success message
         alert(`Cảm ơn ${name} đã xác nhận! Chúng mình rất mong được gặp bạn.`);
         
-        // Reset form
         rsvpForm.reset();
     } catch (error) {
         console.error('Error submitting form:', error);
         alert('Có lỗi xảy ra. Vui lòng thử lại sau.');
     } finally {
-        // Restore button
         submitBtn.innerHTML = originalText;
         submitBtn.disabled = false;
     }
 }
 
-// Initialize when DOM is loaded
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initRSVPForm);
 } else {
     initRSVPForm();
 }
 
-// Make export function available globally
 window.exportMessagesToJSON = exportMessagesToJSON;
 
-// Random floating hearts for ambiance
 function startRandomHearts() {
     const guestMessagesContainer = document.querySelector('.guest-messages');
     if (!guestMessagesContainer) return;
     
-    // Create hearts more frequently
     setInterval(() => {
-        // 70% chance to create 1-2 hearts every 1.5 seconds
         if (Math.random() < 0.7) {
-            const count = Math.floor(Math.random() * 2) + 1; // 1-2 hearts
+            const count = Math.floor(Math.random() * 2) + 1;
             for (let i = 0; i < count; i++) {
                 setTimeout(() => {
                     createFloatingHeart(guestMessagesContainer);
                 }, i * 400);
             }
         }
-    }, 1500); // Every 1.5 seconds
+    }, 1500);
 }
 
-// Start random hearts after page loads
 setTimeout(startRandomHearts, 2000);
 
-// Scroll animations - giống template
 const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -100px 0px'
@@ -532,33 +361,26 @@ const observerOptions = {
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            // Trigger animation by adding visible class
             entry.target.classList.add('visible');
             entry.target.style.animationPlayState = 'running';
         }
     });
 }, observerOptions);
 
-// Observe all animated elements
 document.querySelectorAll('.fade-in, .slide-up, .slide-right, .slide-left').forEach(el => {
-    // Initially pause animations
     el.style.animationPlayState = 'paused';
     observer.observe(el);
 });
 
-// Auto scroll down slowly on first visit
 function autoScrollOnFirstVisit() {
-    // Check if this is the first visit
     const hasVisited = sessionStorage.getItem('hasVisited');
     
     console.log('🔍 Auto scroll check - hasVisited:', hasVisited);
     
     if (!hasVisited) {
-        // Mark as visited for this session
         sessionStorage.setItem('hasVisited', 'true');
         console.log('✅ First visit detected - starting auto scroll');
         
-        // Wait a bit for page to fully load
         setTimeout(() => {
             const documentHeight = document.documentElement.scrollHeight;
             const windowHeight = window.innerHeight;
@@ -568,9 +390,8 @@ function autoScrollOnFirstVisit() {
             console.log('📐 Window height:', windowHeight);
             console.log('📊 Max scroll:', maxScroll);
             
-            // Scroll gradually with constant slow speed
-            const scrollSpeed = 1; // pixels per frame (slower = smaller number)
-            const targetScroll = maxScroll * 0.9; // Scroll to 90% of page
+            const scrollSpeed = 1;
+            const targetScroll = maxScroll * 0.9;
             let currentScroll = window.pageYOffset;
             let isScrolling = true;
             let animationFrameId = null;
@@ -578,7 +399,6 @@ function autoScrollOnFirstVisit() {
             console.log('🎯 Target scroll position:', targetScroll);
             console.log('🚀 Starting gradual auto scroll...');
             
-            // Function to stop auto scroll
             function stopAutoScroll() {
                 if (isScrolling) {
                     isScrolling = false;
@@ -587,7 +407,6 @@ function autoScrollOnFirstVisit() {
                     }
                     console.log('⏹️ Auto scroll stopped by user interaction');
                     
-                    // Remove event listeners after stopping
                     document.removeEventListener('click', stopAutoScroll);
                     document.removeEventListener('touchstart', stopAutoScroll);
                     document.removeEventListener('wheel', stopAutoScroll);
@@ -595,7 +414,6 @@ function autoScrollOnFirstVisit() {
                 }
             }
             
-            // Add event listeners to detect user interaction
             document.addEventListener('click', stopAutoScroll, { once: true });
             document.addEventListener('touchstart', stopAutoScroll, { once: true });
             document.addEventListener('wheel', stopAutoScroll, { once: true });
@@ -606,7 +424,6 @@ function autoScrollOnFirstVisit() {
                 
                 currentScroll += scrollSpeed;
                 
-                // Stop when reached target
                 if (currentScroll >= targetScroll) {
                     window.scrollTo({
                         top: targetScroll,
@@ -622,18 +439,16 @@ function autoScrollOnFirstVisit() {
                     behavior: 'auto'
                 });
                 
-                // Continue scrolling
                 animationFrameId = requestAnimationFrame(gradualScroll);
             }
             
             requestAnimationFrame(gradualScroll);
-        }, 2000); // Start after 2 seconds to ensure everything is loaded
+        }, 2000);
     } else {
         console.log('⏭️ Not first visit - skipping auto scroll');
     }
 }
 
-// Run auto scroll when page loads
 window.addEventListener('load', () => {
     console.log('🌐 Page loaded - initializing auto scroll');
     autoScrollOnFirstVisit();
