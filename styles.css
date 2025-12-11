@@ -1505,10 +1505,10 @@ body {
 
 .event-location {
     font-size: clamp(0.75rem, 1.8vw, 0.9rem);
-    color: #555;
+    color: #3e0101;
     font-family: 'Quicksand', sans-serif;
     margin-top: 12px;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .ceremony-time {
