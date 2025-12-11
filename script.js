@@ -1,127 +1,136 @@
 // Wedding date
 const weddingDate = new Date('2025-12-21T11:30:00');
 
-// Audio control
+// Audio control - MUST run BEFORE any other code
 let audioControl = null;
 let bgMusic = null;
 
-// Initialize audio elements with retry
-function initAudioElements() {
-    audioControl = document.getElementById('audioControl');
-    bgMusic = document.getElementById('bgMusic');
-    
-    if (!bgMusic) {
-        console.log('⏳ Audio element not found, retrying...');
-        setTimeout(initAudioElements, 100);
-        return false;
-    }
-    
-    console.log('✓ Audio elements initialized');
-    return true;
+// Function to safely get audio elements
+function getAudioElements() {
+    if (!audioControl) audioControl = document.getElementById('audioControl');
+    if (!bgMusic) bgMusic = document.getElementById('bgMusic');
+    return { audioControl, bgMusic };
 }
 
-// Function to play audio with retry mechanism
-function playAudioWithRetry() {
+// Main function to trigger audio play
+function triggerAudioPlay() {
+    const { audioControl, bgMusic } = getAudioElements();
+    
     if (!bgMusic) {
-        console.log('❌ bgMusic not initialized');
+        console.log('⏳ Waiting for audio element...');
+        setTimeout(triggerAudioPlay, 100);
         return;
     }
     
-    // Set up audio for autoplay
+    console.log('🎯 Attempting to play audio...');
+    
+    // Set audio properties
     bgMusic.autoplay = true;
     bgMusic.muted = false;
     bgMusic.volume = 1;
+    bgMusic.loop = true;
     
+    // Direct play attempt
     const playPromise = bgMusic.play();
     
     if (playPromise !== undefined) {
         playPromise
             .then(() => {
-                console.log('🎵 Audio auto-played successfully');
+                console.log('✅ Audio playing successfully!');
                 if (audioControl) {
                     audioControl.classList.add('playing');
                 }
             })
             .catch((error) => {
-                console.log('⚠️ Auto-play attempt failed, retrying with muted trick...', error);
+                console.log('⚠️ Direct play failed:', error.name);
                 
-                // Muted autoplay trick - works on most browsers
+                // Try muted autoplay
                 bgMusic.muted = true;
-                bgMusic.play()
-                    .then(() => {
-                        console.log('🎵 Audio playing (muted trick), attempting to unmute...');
-                        
-                        // Try to unmute after a short delay
-                        setTimeout(() => {
-                            bgMusic.muted = false;
-                            if (audioControl) {
-                                audioControl.classList.add('playing');
-                            }
-                            console.log('🔊 Audio unmuted');
-                        }, 300);
-                    })
-                    .catch((muteError) => {
-                        console.log('⚠️ Even muted autoplay failed:', muteError);
-                        // Set up listener for first user interaction
-                        setupUserInteractionListener();
-                    });
+                const mutedPlayPromise = bgMusic.play();
+                
+                if (mutedPlayPromise !== undefined) {
+                    mutedPlayPromise
+                        .then(() => {
+                            console.log('✅ Audio playing (muted)');
+                            setTimeout(() => {
+                                bgMusic.muted = false;
+                                if (audioControl) {
+                                    audioControl.classList.add('playing');
+                                }
+                                console.log('✅ Audio unmuted');
+                            }, 200);
+                        })
+                        .catch((muteError) => {
+                            console.log('⚠️ Muted autoplay also failed');
+                            // Wait for user interaction
+                            waitForUserInteraction();
+                        });
+                }
             });
     }
 }
 
-// Set up listener for first user interaction
-function setupUserInteractionListener() {
-    const playOnInteraction = () => {
-        if (bgMusic && bgMusic.paused) {
-            console.log('👆 User interaction detected - playing audio');
-            bgMusic.muted = false;
-            bgMusic.play().catch(() => console.log('Failed to play on interaction'));
-            if (audioControl) {
-                audioControl.classList.add('playing');
-            }
-        }
-        // Remove listeners after first interaction
-        document.removeEventListener('click', playOnInteraction);
-        document.removeEventListener('touchstart', playOnInteraction);
-    };
+// Wait for any user interaction to play audio
+function waitForUserInteraction() {
+    console.log('⏳ Waiting for user interaction to play audio...');
     
-    document.addEventListener('click', playOnInteraction, { once: true });
-    document.addEventListener('touchstart', playOnInteraction, { once: true });
+    function attemptPlay() {
+        const { bgMusic, audioControl } = getAudioElements();
+        if (bgMusic && bgMusic.paused) {
+            console.log('👆 User interacted - playing audio now');
+            bgMusic.muted = false;
+            bgMusic.play()
+                .then(() => {
+                    if (audioControl) {
+                        audioControl.classList.add('playing');
+                    }
+                })
+                .catch(e => console.log('Play failed:', e));
+        }
+    }
+    
+    // Listen for any interaction
+    document.addEventListener('click', attemptPlay, { once: true });
+    document.addEventListener('touchstart', attemptPlay, { once: true });
+    document.addEventListener('keydown', attemptPlay, { once: true });
 }
 
-// Initialize audio elements
-initAudioElements();
+// Start playing ASAP
+if (document.readyState === 'loading') {
+    // DOM still loading
+    setTimeout(triggerAudioPlay, 100);
+} else {
+    // DOM already loaded
+    triggerAudioPlay();
+}
 
-// Try to play audio after a short delay to ensure elements are ready
-setTimeout(() => {
-    if (initAudioElements()) {
-        playAudioWithRetry();
-    }
-}, 500);
-
-// Also try when page finishes loading
+// Try again when window fully loads
 window.addEventListener('load', () => {
-    console.log('📄 Page loaded - ensuring audio is playing');
-    if (initAudioElements()) {
-        playAudioWithRetry();
-    }
+    console.log('📄 Window loaded');
+    setTimeout(triggerAudioPlay, 300);
 });
 
 // Set up audio control button
 document.addEventListener('DOMContentLoaded', () => {
-    audioControl = document.getElementById('audioControl');
+    const { audioControl, bgMusic } = getAudioElements();
     
-    if (audioControl) {
-        audioControl.addEventListener('click', () => {
-            if (bgMusic) {
-                if (bgMusic.paused) {
-                    bgMusic.muted = false;
-                    bgMusic.play().catch(() => {});
-                    audioControl.classList.add('playing');
-                } else {
-                    bgMusic.pause();
-                    audioControl.classList.remove('playing');
-                }
+    if (audioControl && bgMusic) {
+        audioControl.addEventListener('click', (e) => {
+            e.stopPropagation();
+            console.log('🔘 Audio button clicked');
+            
+            if (bgMusic.paused) {
+                bgMusic.muted = false;
+                bgMusic.play()
+                    .then(() => {
+                        audioControl.classList.add('playing');
+                        console.log('▶️ Audio playing');
+                    })
+                    .catch(e => console.log('Play failed:', e));
+            } else {
+                bgMusic.pause();
+                audioControl.classList.remove('playing');
+                console.log('⏸️ Audio paused');
             }
         });
     }
