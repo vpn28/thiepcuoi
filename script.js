@@ -62,8 +62,8 @@ function triggerAudioPlay() {
                         })
                         .catch((muteError) => {
                             console.log('⚠️ Muted autoplay also failed');
-                            // Wait for user interaction
-                            waitForUserInteraction();
+                            // Auto-trigger on first user interaction
+                            autoTriggerAudioOnFirstInteraction();
                         });
                 }
             });
@@ -72,7 +72,7 @@ function triggerAudioPlay() {
 
 // Wait for any user interaction to play audio
 function waitForUserInteraction() {
-    console.log('⏳ Waiting for user interaction to play audio...');
+    console.log('⏳ Browser blocked autoplay, setting up auto-trigger on first interaction...');
     
     function attemptPlay() {
         const { bgMusic, audioControl } = getAudioElements();
@@ -84,15 +84,51 @@ function waitForUserInteraction() {
                     if (audioControl) {
                         audioControl.classList.add('playing');
                     }
+                    console.log('✅ Audio started via user interaction');
                 })
                 .catch(e => console.log('Play failed:', e));
         }
     }
     
-    // Listen for any interaction
-    document.addEventListener('click', attemptPlay, { once: true });
-    document.addEventListener('touchstart', attemptPlay, { once: true });
-    document.addEventListener('keydown', attemptPlay, { once: true });
+    // Simulate user interaction by triggering play on any event
+    const events = ['click', 'touchstart', 'keydown', 'mousemove', 'scroll'];
+    events.forEach(event => {
+        document.addEventListener(event, attemptPlay, { once: true, passive: true });
+    });
+}
+
+// Alternative: Auto-trigger play with very first page interaction
+function autoTriggerAudioOnFirstInteraction() {
+    let interactionDetected = false;
+    
+    function onFirstInteraction() {
+        if (!interactionDetected) {
+            interactionDetected = true;
+            console.log('🎯 First interaction detected - auto-triggering audio');
+            
+            const { bgMusic, audioControl } = getAudioElements();
+            if (bgMusic && bgMusic.paused) {
+                bgMusic.play()
+                    .then(() => {
+                        if (audioControl) {
+                            audioControl.classList.add('playing');
+                        }
+                        console.log('✅ Audio auto-triggered');
+                    })
+                    .catch(e => console.log('Auto-trigger failed:', e));
+            }
+            
+            // Remove all listeners
+            ['click', 'touchstart', 'keydown', 'mousemove', 'scroll'].forEach(evt => {
+                document.removeEventListener(evt, onFirstInteraction);
+            });
+        }
+    }
+    
+    // Add listeners for any interaction
+    ['click', 'touchstart', 'keydown', 'mousemove', 'scroll'].forEach(event => {
+        document.addEventListener(event, onFirstInteraction, { once: true, passive: true });
+    });
 }
 
 // Start playing ASAP
