@@ -4,52 +4,53 @@ const weddingDate = new Date('2025-12-21T11:30:00');
 // Audio control
 const audioControl = document.getElementById('audioControl');
 const bgMusic = document.getElementById('bgMusic');
+const audioWelcomeModal = document.getElementById('audioWelcome');
+const audioWelcomeBtn = document.querySelector('.audio-welcome-btn');
+
+// Handle welcome modal button
+if (audioWelcomeBtn) {
+    audioWelcomeBtn.addEventListener('click', () => {
+        console.log('🎵 User clicked play button');
+        
+        // Unmute and ensure playing
+        if (bgMusic) {
+            bgMusic.muted = false;
+            bgMusic.volume = 1;
+            bgMusic.play().catch(e => console.log('Play error:', e));
+            if (audioControl) audioControl.classList.add('playing');
+        }
+        
+        // Hide modal
+        if (audioWelcomeModal) {
+            audioWelcomeModal.classList.add('hidden');
+        }
+        
+        // Save preference
+        sessionStorage.setItem('audioStarted', 'true');
+    });
+}
 
 // Initialize audio
 function initAudio() {
     if (!bgMusic) return;
-
-    console.log('🎵 Initializing audio...');
-    bgMusic.muted = false;
-    bgMusic.volume = 1;
-
-    const playPromise = bgMusic.play();
-    if (playPromise) {
-        playPromise
-            .then(() => {
-                console.log('✅ Audio playing!');
-                audioControl?.classList.add('playing');
-            })
-            .catch(err => {
-                console.warn('⚠️ Play failed:', err.name);
-                setupUnmuteOnInteraction();
-            });
-    }
-}
-
-// Unlock audio on first user interaction
-function setupUnmuteOnInteraction() {
-    console.log('👉 Waiting for user interaction to unlock audio...');
-
-    const unlock = () => {
+    
+    const audioStarted = sessionStorage.getItem('audioStarted');
+    
+    if (!audioStarted) {
+        // First time - show modal, keep audio muted
+        console.log('🎵 First visit - showing welcome modal');
+        bgMusic.muted = true;
+        if (audioWelcomeModal) {
+            audioWelcomeModal.classList.remove('hidden');
+        }
+    } else {
+        // Already started - unmute and play
+        console.log('🎵 Resuming audio');
         bgMusic.muted = false;
-        
-        bgMusic.play()
-            .then(() => {
-                console.log('🔊 Audio unlocked!');
-                audioControl?.classList.add('playing');
-
-                // Remove listeners
-                ['click', 'touchstart', 'keydown'].forEach(evt =>
-                    document.removeEventListener(evt, unlock)
-                );
-            })
-            .catch(e => console.warn('❌ Still blocked:', e));
-    };
-
-    ['click', 'touchstart', 'keydown'].forEach(evt =>
-        document.addEventListener(evt, unlock, { once: true })
-    );
+        bgMusic.volume = 1;
+        bgMusic.play().catch(e => console.log('Play error:', e));
+        if (audioControl) audioControl.classList.add('playing');
+    }
 }
 
 // Initialize on load
