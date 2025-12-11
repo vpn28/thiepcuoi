@@ -8,41 +8,48 @@ const bgMusic = document.getElementById('bgMusic');
 // Initialize audio
 function initAudio() {
     if (!bgMusic) return;
-    
+
     console.log('🎵 Initializing audio...');
     bgMusic.muted = false;
     bgMusic.volume = 1;
-    
+
     const playPromise = bgMusic.play();
-    if (playPromise !== undefined) {
+    if (playPromise) {
         playPromise
             .then(() => {
                 console.log('✅ Audio playing!');
-                if (audioControl) audioControl.classList.add('playing');
+                audioControl?.classList.add('playing');
             })
-            .catch(e => {
-                console.log('⚠️ Play failed:', e.name);
+            .catch(err => {
+                console.warn('⚠️ Play failed:', err.name);
                 setupUnmuteOnInteraction();
             });
     }
 }
 
-// Unmute on first user interaction
+// Unlock audio on first user interaction
 function setupUnmuteOnInteraction() {
-    const unmuteAudio = () => {
-        if (bgMusic && bgMusic.muted) {
-            console.log('👆 Unmuting audio on user interaction');
-            bgMusic.muted = false;
-            if (audioControl) audioControl.classList.add('playing');
-            ['click', 'touchstart', 'keydown'].forEach(evt => {
-                document.removeEventListener(evt, unmuteAudio);
-            });
-        }
+    console.log('👉 Waiting for user interaction to unlock audio...');
+
+    const unlock = () => {
+        bgMusic.muted = false;
+        
+        bgMusic.play()
+            .then(() => {
+                console.log('🔊 Audio unlocked!');
+                audioControl?.classList.add('playing');
+
+                // Remove listeners
+                ['click', 'touchstart', 'keydown'].forEach(evt =>
+                    document.removeEventListener(evt, unlock)
+                );
+            })
+            .catch(e => console.warn('❌ Still blocked:', e));
     };
-    
-    ['click', 'touchstart', 'keydown'].forEach(event => {
-        document.addEventListener(event, unmuteAudio, { once: true });
-    });
+
+    ['click', 'touchstart', 'keydown'].forEach(evt =>
+        document.addEventListener(evt, unlock, { once: true })
+    );
 }
 
 // Initialize on load
@@ -56,20 +63,20 @@ window.addEventListener('load', () => {
     setTimeout(initAudio, 200);
 });
 
-// Audio button control
-if (audioControl && bgMusic) {
-    audioControl.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (bgMusic.paused) {
-            bgMusic.muted = false;
-            bgMusic.play();
-            audioControl.classList.add('playing');
-        } else {
-            bgMusic.pause();
-            audioControl.classList.remove('playing');
-        }
-    });
-}
+// Manual audio toggle
+audioControl?.addEventListener('click', e => {
+    e.stopPropagation();
+
+    if (bgMusic.paused) {
+        bgMusic.muted = false;
+        bgMusic.play();
+        audioControl.classList.add('playing');
+    } else {
+        bgMusic.pause();
+        audioControl.classList.remove('playing');
+    }
+});
+
 
 // Countdown
 function updateCountdown() {
