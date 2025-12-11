@@ -5,21 +5,70 @@ const weddingDate = new Date('2025-12-21T11:30:00');
 const audioControl = document.getElementById('audioControl');
 const bgMusic = document.getElementById('bgMusic');
 
-// Auto play audio when page loads
+// Function to play audio with retry mechanism
+function playAudioWithRetry() {
+    // Set up audio for autoplay
+    bgMusic.autoplay = true;
+    bgMusic.muted = false;
+    
+    const playPromise = bgMusic.play();
+    
+    if (playPromise !== undefined) {
+        playPromise
+            .then(() => {
+                console.log('🎵 Audio auto-played successfully');
+                audioControl.classList.add('playing');
+            })
+            .catch((error) => {
+                console.log('⚠️ Auto-play attempt failed, retrying with muted trick...', error);
+                
+                // Muted autoplay trick - works on most browsers
+                bgMusic.muted = true;
+                bgMusic.play()
+                    .then(() => {
+                        console.log('🎵 Audio playing (muted trick), attempting to unmute...');
+                        
+                        // Try to unmute after a short delay
+                        setTimeout(() => {
+                            bgMusic.muted = false;
+                            audioControl.classList.add('playing');
+                            console.log('🔊 Audio unmuted');
+                        }, 500);
+                    })
+                    .catch((muteError) => {
+                        console.log('⚠️ Even muted autoplay failed:', muteError);
+                    });
+            });
+    }
+}
+
+// Try to play audio immediately when script loads
+playAudioWithRetry();
+
+// Also try when page finishes loading
 window.addEventListener('load', () => {
-    // Try to auto play (modern browsers may block this)
-    bgMusic.play()
-        .then(() => {
-            console.log('🎵 Audio auto-played successfully');
-            audioControl.classList.add('playing');
-        })
-        .catch((error) => {
-            console.log('⚠️ Auto-play blocked by browser. User must click to play.', error);
-        });
+    console.log('📄 Page loaded - ensuring audio is playing');
+    playAudioWithRetry();
 });
+
+// And try on user first interaction (click, touch) in case browser blocked everything
+document.addEventListener('click', () => {
+    if (bgMusic.paused) {
+        console.log('👆 User clicked - attempting to play audio');
+        playAudioWithRetry();
+    }
+}, { once: true });
+
+document.addEventListener('touchstart', () => {
+    if (bgMusic.paused) {
+        console.log('👆 User touched - attempting to play audio');
+        playAudioWithRetry();
+    }
+}, { once: true });
 
 audioControl.addEventListener('click', () => {
     if (bgMusic.paused) {
+        bgMusic.muted = false;
         bgMusic.play().catch(() => {});
         audioControl.classList.add('playing');
     } else {
