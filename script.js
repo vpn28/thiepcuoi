@@ -149,7 +149,32 @@ window.addEventListener('load', () => {
 // Set up audio control button
 document.addEventListener('DOMContentLoaded', () => {
     const { audioControl, bgMusic } = getAudioElements();
+    const audioTriggerOverlay = document.getElementById('audioTrigger');
     
+    // Handle audio trigger overlay click
+    if (audioTriggerOverlay) {
+        audioTriggerOverlay.addEventListener('click', (e) => {
+            e.stopPropagation();
+            console.log('👆 Overlay clicked - playing audio');
+            
+            if (bgMusic) {
+                bgMusic.play()
+                    .then(() => {
+                        console.log('✅ Audio playing!');
+                        if (audioControl) {
+                            audioControl.classList.add('playing');
+                        }
+                        // Hide overlay
+                        audioTriggerOverlay.classList.add('hidden');
+                    })
+                    .catch(e => {
+                        console.log('Play failed:', e);
+                    });
+            }
+        });
+    }
+    
+    // Handle audio control button
     if (audioControl && bgMusic) {
         audioControl.addEventListener('click', (e) => {
             e.stopPropagation();
