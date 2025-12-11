@@ -2,14 +2,35 @@
 const weddingDate = new Date('2025-12-21T11:30:00');
 
 // Audio control
-const audioControl = document.getElementById('audioControl');
-const bgMusic = document.getElementById('bgMusic');
+let audioControl = null;
+let bgMusic = null;
+
+// Initialize audio elements with retry
+function initAudioElements() {
+    audioControl = document.getElementById('audioControl');
+    bgMusic = document.getElementById('bgMusic');
+    
+    if (!bgMusic) {
+        console.log('⏳ Audio element not found, retrying...');
+        setTimeout(initAudioElements, 100);
+        return false;
+    }
+    
+    console.log('✓ Audio elements initialized');
+    return true;
+}
 
 // Function to play audio with retry mechanism
 function playAudioWithRetry() {
+    if (!bgMusic) {
+        console.log('❌ bgMusic not initialized');
+        return;
+    }
+    
     // Set up audio for autoplay
     bgMusic.autoplay = true;
     bgMusic.muted = false;
+    bgMusic.volume = 1;
     
     const playPromise = bgMusic.play();
     
@@ -17,7 +38,9 @@ function playAudioWithRetry() {
         playPromise
             .then(() => {
                 console.log('🎵 Audio auto-played successfully');
-                audioControl.classList.add('playing');
+                if (audioControl) {
+                    audioControl.classList.add('playing');
+                }
             })
             .catch((error) => {
                 console.log('⚠️ Auto-play attempt failed, retrying with muted trick...', error);
@@ -31,49 +54,76 @@ function playAudioWithRetry() {
                         // Try to unmute after a short delay
                         setTimeout(() => {
                             bgMusic.muted = false;
-                            audioControl.classList.add('playing');
+                            if (audioControl) {
+                                audioControl.classList.add('playing');
+                            }
                             console.log('🔊 Audio unmuted');
-                        }, 500);
+                        }, 300);
                     })
                     .catch((muteError) => {
                         console.log('⚠️ Even muted autoplay failed:', muteError);
+                        // Set up listener for first user interaction
+                        setupUserInteractionListener();
                     });
             });
     }
 }
 
-// Try to play audio immediately when script loads
-playAudioWithRetry();
+// Set up listener for first user interaction
+function setupUserInteractionListener() {
+    const playOnInteraction = () => {
+        if (bgMusic && bgMusic.paused) {
+            console.log('👆 User interaction detected - playing audio');
+            bgMusic.muted = false;
+            bgMusic.play().catch(() => console.log('Failed to play on interaction'));
+            if (audioControl) {
+                audioControl.classList.add('playing');
+            }
+        }
+        // Remove listeners after first interaction
+        document.removeEventListener('click', playOnInteraction);
+        document.removeEventListener('touchstart', playOnInteraction);
+    };
+    
+    document.addEventListener('click', playOnInteraction, { once: true });
+    document.addEventListener('touchstart', playOnInteraction, { once: true });
+}
+
+// Initialize audio elements
+initAudioElements();
+
+// Try to play audio after a short delay to ensure elements are ready
+setTimeout(() => {
+    if (initAudioElements()) {
+        playAudioWithRetry();
+    }
+}, 500);
 
 // Also try when page finishes loading
 window.addEventListener('load', () => {
     console.log('📄 Page loaded - ensuring audio is playing');
-    playAudioWithRetry();
+    if (initAudioElements()) {
+        playAudioWithRetry();
+    }
 });
 
-// And try on user first interaction (click, touch) in case browser blocked everything
-document.addEventListener('click', () => {
-    if (bgMusic.paused) {
-        console.log('👆 User clicked - attempting to play audio');
-        playAudioWithRetry();
-    }
-}, { once: true });
-
-document.addEventListener('touchstart', () => {
-    if (bgMusic.paused) {
-        console.log('👆 User touched - attempting to play audio');
-        playAudioWithRetry();
-    }
-}, { once: true });
-
-audioControl.addEventListener('click', () => {
-    if (bgMusic.paused) {
-        bgMusic.muted = false;
-        bgMusic.play().catch(() => {});
-        audioControl.classList.add('playing');
-    } else {
-        bgMusic.pause();
-        audioControl.classList.remove('playing');
+// Set up audio control button
+document.addEventListener('DOMContentLoaded', () => {
+    audioControl = document.getElementById('audioControl');
+    
+    if (audioControl) {
+        audioControl.addEventListener('click', () => {
+            if (bgMusic) {
+                if (bgMusic.paused) {
+                    bgMusic.muted = false;
+                    bgMusic.play().catch(() => {});
+                    audioControl.classList.add('playing');
+                } else {
+                    bgMusic.pause();
+                    audioControl.classList.remove('playing');
+                }
+            }
+        });
     }
 });
 
