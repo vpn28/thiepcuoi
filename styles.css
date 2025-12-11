@@ -249,7 +249,7 @@ body {
     transform: translateY(-50%) rotate(-10deg) !important;
     z-index: 2;
     font-family: 'katty Diona', cursive;
-    font-size: 4rem;
+    font-size: 2.5rem;
     color: #fff;
     font-weight: 400;
     font-style: italic;
@@ -1339,8 +1339,8 @@ body {
 
 .event-title {
     font-family: 'Belinda Avenue', serif;
-    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-    color: #2c3e50;
+    font-size: clamp(1rem, 2.5vw, 1.8rem);
+    color: #f9002a;
     margin-bottom: 8px;
     font-weight: 700;
     text-align: center;
@@ -1348,8 +1348,8 @@ body {
 
 .event-subtitle {
     font-family: 'Quicksand', sans-serif;
-    font-size: clamp(0.75rem, 1.8vw, 0.95rem);
-    color: #777;
+    font-size: clamp(1rem, 1.8vw, 1.25rem);
+    color: #010000;
     text-align: center;
     margin-bottom: 20px;
     font-style: italic;
@@ -1375,8 +1375,8 @@ body {
 
 .event-date-num {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(1.2rem, 3vw, 2rem);
-    color: #d4697c;
+    font-size: clamp(1rem, 3vw, 2rem);
+    color: #dd02b8;
     font-weight: 700;
     margin: 12px 0;
     letter-spacing: 2px;
@@ -1406,7 +1406,7 @@ body {
 }
 
 .ceremony-time {
-    font-size: clamp(0.85rem, 2vw, 0.95rem);
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
     color: #333;
     font-family: 'Quicksand', sans-serif;
     margin: 5px 0;
@@ -1484,7 +1484,7 @@ body {
 }
 
 .ceremony-time {
-    font-size: 1rem;
+    font-size: 0.8rem;
     color: #333;
     font-family: 'Quicksand', sans-serif;
     margin: 15px 0;
